@@ -3,13 +3,11 @@ import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:real_estate_application/view/authentication/authentication_page.dart';
+import 'firebase/firebase_constants.dart';
 
-main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  //await Firebase.initializeApp();
+  await firebaseInitialization;
   runApp(const MyApp());
 }
 

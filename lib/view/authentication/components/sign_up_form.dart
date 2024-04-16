@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/controller/authcontroller.dart';
+import 'package:real_estate_application/firebase/firebase_constants.dart';
 import 'package:real_estate_application/view/authentication/authentication_page.dart';
 import 'package:real_estate_application/view/authentication/components/custom_textfield.dart';
+import 'package:real_estate_application/view/authentication/email_verification_page.dart';
 import 'package:real_estate_application/view/home/home_page.dart';
 
 class SignUpForms extends StatefulWidget {
@@ -91,7 +93,18 @@ class _SignUpFormsState extends State<SignUpForms> {
                     borderRadius: BorderRadius.circular(10.0),
                   ))),
               onPressed: () async {
-                await ctrl.signUp();
+                ctrl.loading.value = true;
+                await ctrl.signUp(
+                  userName: ctrl.userName.text,
+                  userEmail: ctrl.email.text,
+                  password: ctrl.password.text,
+                  confirmPassword: ctrl.confirmPassword.text,
+                  context: context,
+                );
+                if (auth.currentUser != null) {
+                  Get.to(const EmailVerificationPage());
+                }
+                ctrl.loading.value = true;
               },
               child: ctrl.loading.value
                   ? const CircularProgressIndicator(
