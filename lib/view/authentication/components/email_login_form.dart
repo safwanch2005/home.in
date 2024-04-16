@@ -2,41 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/controller/authcontroller.dart';
-import 'package:real_estate_application/view/authentication/authentication_page.dart';
 import 'package:real_estate_application/view/authentication/components/custom_textfield.dart';
+import 'package:real_estate_application/view/authentication/signup_page.dart';
 import 'package:real_estate_application/view/home/home_page.dart';
 
-class SignUpForms extends StatefulWidget {
-  const SignUpForms({super.key});
-
-  @override
-  State<SignUpForms> createState() => _SignUpFormsState();
-}
-
-class _SignUpFormsState extends State<SignUpForms> {
+class EmailLogInForm extends StatelessWidget {
+  EmailLogInForm({super.key});
   bool? isAgreedTermsAndConditions = false;
   final ctrl = Get.put(AuthController());
-  // var ctrl;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 25,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.08,
         ),
         CustomTextFielForAuthPage(
-          titleText: "Full name",
-          hintText: "Full name",
-          controller: ctrl.userName,
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        CustomTextFielForAuthPage(
-          titleText: "Email or number",
-          hintText: "Email or number",
-          controller: ctrl.email,
+          titleText: "Email",
+          hintText: "Enter email",
+          controller: ctrl.loginEmail,
         ),
         const SizedBox(
           height: 15,
@@ -44,38 +29,11 @@ class _SignUpFormsState extends State<SignUpForms> {
         CustomTextFielForAuthPage(
           titleText: "Password",
           hintText: "Password",
-          controller: ctrl.password,
-          isPassword: true,
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        CustomTextFielForAuthPage(
-          titleText: "Confirm password",
-          hintText: "Confirm password",
-          controller: ctrl.confirmPassword,
+          controller: ctrl.loginPassword,
           isPassword: true,
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.17,
-        ),
-        Row(
-          children: [
-            Checkbox(
-              checkColor: const Color(0xFF00704A),
-              fillColor: MaterialStateProperty.all<Color>(Colors.white),
-              value: isAgreedTermsAndConditions,
-              onChanged: (value) {
-                setState(() {
-                  isAgreedTermsAndConditions = value;
-                });
-              },
-            ),
-            Text(
-              "I agree with Terms of Conditions and Privacy Policy",
-              style: GoogleFonts.poppins(fontSize: 16),
-            )
-          ],
+          height: MediaQuery.of(context).size.height * 0.38,
         ),
         SizedBox(
           height: 50,
@@ -91,14 +49,15 @@ class _SignUpFormsState extends State<SignUpForms> {
                     borderRadius: BorderRadius.circular(10.0),
                   ))),
               onPressed: () async {
-                await ctrl.signUp();
+                await ctrl.signIn();
+                Get.to(() => HomePage());
               },
               child: ctrl.loading.value
                   ? const CircularProgressIndicator(
                       color: Colors.white,
                     )
                   : Text(
-                      "sign up",
+                      "Log in",
                       style: GoogleFonts.poppins(
                           color: Colors.white, fontSize: 20),
                     ),
@@ -111,15 +70,17 @@ class _SignUpFormsState extends State<SignUpForms> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Already have an account?",
+                "Don't have an account?",
                 style: GoogleFonts.poppins(fontSize: 15, color: Colors.black),
               ),
               InkWell(
-                onTap: () => Get.off(const AuthenticationPage()),
+                onTap: () => Get.to(const SignUpPage()),
                 child: Text(
-                  " Log in",
+                  " Sign up",
                   style: GoogleFonts.poppins(
-                      fontSize: 15, color: const Color(0xFF00704A)),
+                    fontSize: 15,
+                    color: const Color(0xFF00704A),
+                  ),
                 ),
               ),
             ],

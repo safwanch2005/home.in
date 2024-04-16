@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:real_estate_application/view/authentication/components/authentication_options.dart';
+import 'package:real_estate_application/view/authentication/components/authentication_options/authentication_options.dart';
 
 class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({super.key});
@@ -20,7 +19,7 @@ class AuthenticationPage extends StatelessWidget {
                 child: Image.asset(
                   "assets/green_car.jpeg",
                   fit: BoxFit.fitWidth,
-                  height: MediaQuery.of(context).size.height * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.771,
                 ),
               ),
             ],
