@@ -12,7 +12,20 @@
           "package_name": "com.example.real_estate_application"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "63336261953-pkjki1acksenpu7pndsmijvluegpl2ln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.real_estate_application",
+            "certificate_hash": "79684cbfe951ae23f582b70985d14cf777257d54"
+          }
+        },
+        {
+          "client_id": "63336261953-7er5fvmkpuo3uerjgv5hsa1vekvnkpup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCNXhCLRRpaXzMzTqOQyrsAOB10m8ljh0k"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63336261953-7er5fvmkpuo3uerjgv5hsa1vekvnkpup.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "63336261953-mvjd6urj98me3oifo53rcbraj6ovsbtk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.realEstateApplication"
+              }
+            }
+          ]
         }
       }
     }
