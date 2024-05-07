@@ -1,18 +1,20 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:real_estate_application/controller/authcontroller.dart';
 import 'package:real_estate_application/view/authentication/authentication_page.dart';
+import 'package:real_estate_application/view/bottom_nav/bottom_navbar.dart';
 import 'firebase/firebase_constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await firebaseInitialization;
-  runApp(const MyApp());
+  Get.config(enableLog: false);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final ctrl = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +24,24 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.red,
         inputDecorationTheme: const InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color:
-                    Colors.grey), // Set your desired border color when focused
+            borderSide: BorderSide(color: Colors.grey),
           ),
         ),
       ),
-      home: const AuthenticationPage(),
+      home: StreamBuilder(
+        stream: auth.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return BottomNavBar();
+            } else {
+              return const AuthenticationPage();
+            }
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }

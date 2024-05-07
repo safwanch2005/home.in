@@ -1,98 +1,74 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:real_estate_application/controller/authcontroller.dart';
-import 'package:real_estate_application/view/authentication/authentication_page.dart';
+import 'package:real_estate_application/view/home/home_properties_category/home_properties_category.dart';
+import 'package:real_estate_application/view/home/home_search/home_search.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   FirebaseAuth auth = FirebaseAuth.instance;
-  final AuthController ctrl = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Home Page"),
-            TextButton(
-                onPressed: () async {
-                  await auth.signOut();
-                  Get.offAll(() => const AuthenticationPage());
-                },
-                child: Text(
-                  "log out",
-                  style: GoogleFonts.poppins(fontSize: 20),
-                ))
-          ],
-        ),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 100,
-            ),
-            auth.currentUser!.emailVerified
-                ? Column(
-                    children: [
-                      const Icon(
-                        Icons.verified,
-                        color: Colors.blue,
-                        size: 50,
-                      ),
-                      Text(
-                        ctrl.username.value,
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, color: Colors.blue),
-                      ),
-                    ],
-                  )
-                : Column(
-                    children: [
-                      Text(
-                        "${auth.currentUser!.email!} not verified",
-                        style: GoogleFonts.poppins(fontSize: 20),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            try {
-                              FirebaseAuth.instance.currentUser
-                                  ?.sendEmailVerification();
-                            } catch (e) {
-                              debugPrint('$e');
-                            }
-                          },
-                          child: Text(
-                            "send verification link",
-                            style: GoogleFonts.poppins(
-                                fontSize: 20, color: Colors.blue),
-                          ),
-                        ),
-                      )
-                    ],
+      backgroundColor: AppThemeData.black,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            //vertical: MediaQuery.of(context).size.height ,
+            horizontal: MediaQuery.of(context).size.width * 0.05,
+          ),
+          child: Column(
+            children: [
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.01,
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "Find your\nproperty",
+                    style: GoogleFonts.poppins(
+                        height: 1.1,
+                        color: AppThemeData.grey,
+                        fontSize: 55,
+                        fontWeight: FontWeight.w400),
                   ),
-            const SizedBox(
-              height: 150,
-            ),
-            Text(
-              auth.currentUser!.email!,
-              style: GoogleFonts.poppins(fontSize: 20, color: Colors.purple),
-            ),
-            Text(
-              auth.currentUser!.emailVerified
-                  ? "email Verified"
-                  : "email not verified",
-              style: GoogleFonts.poppins(fontSize: 20),
-            ),
-          ],
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width * 0.2,
+                  // ),
+                  CircleAvatar(
+                    backgroundColor: AppThemeData.greyShade,
+                    radius: 50,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.025,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Best property search",
+                  style: GoogleFonts.poppins(
+                      color: AppThemeData.grey,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              const HomeSearch(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              const HomePropertiesCategories()
+            ],
+          ),
         ),
       ),
     );

@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/controller/authcontroller.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 class EmailVerificationPage extends StatefulWidget {
   const EmailVerificationPage({super.key});
@@ -14,12 +16,31 @@ class EmailVerificationPage extends StatefulWidget {
 
 class _EmailVerificationPageState extends State<EmailVerificationPage> {
   final AuthController ctrl = Get.find<AuthController>();
+  Timer? timer;
+  bool showProgressIndicator = true;
 
   @override
   void initState() {
     super.initState();
     // Check the email verification status when the page is initialized
     ctrl.checkEmailVerified();
+    startTimer();
+  }
+
+  startTimer() {
+    timer = Timer(const Duration(seconds: 2), () {
+      setState(() {
+        showProgressIndicator = false;
+      });
+    });
+  }
+
+  restartTimer() {
+    timer?.cancel();
+    setState(() {
+      showProgressIndicator = true;
+    });
+    startTimer();
   }
 
   @override
@@ -47,7 +68,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                       style: GoogleFonts.poppins(
                           fontSize: 31,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xFF00704A)),
+                          color: AppThemeData.green),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -61,47 +82,71 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                         'We have sent you an email on ${FirebaseAuth.instance.currentUser?.email}',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
-                            fontSize: 18, color: Colors.black54),
+                            fontSize: 18, color: AppThemeData.blackShade),
                       ),
                     ),
                   ),
                   const SizedBox(height: 40),
                   Center(
-                      child: ctrl.emailVerified.value
-                          ? Text(
-                              "verified",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 30, color: const Color(0xFF00704A)),
-                            )
-                          : const CircularProgressIndicator(
-                              color: Color(0xFF00704A),
-                            )),
+                    child: ctrl.emailVerified.value
+                        ? Text(
+                            "verified",
+                            style: GoogleFonts.poppins(
+                                fontSize: 30, color: AppThemeData.green),
+                          )
+                        : showProgressIndicator
+                            ? CircularProgressIndicator(
+                                color: AppThemeData.green,
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  restartTimer();
+                                  ctrl.checkEmailVerified();
+                                },
+                                child: Icon(
+                                  Icons.refresh_rounded,
+                                  size: 30,
+                                  color: AppThemeData.green,
+                                ),
+                              ),
+                  ),
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
                     child: Center(
                       child: Text(
-                        'Verifying email....',
+                        showProgressIndicator
+                            ? 'Verifying email....'
+                            : "Retry...",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
-                            fontSize: 13, color: Colors.black),
+                            fontSize: 13, color: AppThemeData.black),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
+                  // GestureDetector(
+                  //   onTap: () {},
+                  //   child: const Icon(
+                  //     Icons.refresh_rounded,
+                  //     size: 30,
+                  //     color: Color(0xFF00704A),
+                  //   ),
+                  // ),
+                  const SizedBox(height: 10),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.5,
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF00704A),
+                          AppThemeData.green,
                         ),
                       ),
                       child: Text(
                         'Resend',
                         style: GoogleFonts.poppins(
-                            fontSize: 20, color: Colors.white),
+                            fontSize: 20, color: AppThemeData.white),
                       ),
                       onPressed: () {
                         try {

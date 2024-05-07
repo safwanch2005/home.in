@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 class CustomTextFielForAuthPage extends StatelessWidget {
   final String hintText;
@@ -22,8 +23,7 @@ class CustomTextFielForAuthPage extends StatelessWidget {
       children: [
         Text(
           titleText,
-          style:
-              GoogleFonts.poppins(fontSize: 20, color: const Color(0xFF00704A)),
+          style: GoogleFonts.poppins(fontSize: 20, color: AppThemeData.green),
         ),
         const SizedBox(
           height: 3,
@@ -35,15 +35,15 @@ class CustomTextFielForAuthPage extends StatelessWidget {
               isPassword, // Set obscureText based on isPassword parameter
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: GoogleFonts.poppins(color: Colors.grey, fontSize: 20),
+            hintStyle:
+                GoogleFonts.poppins(color: AppThemeData.grey, fontSize: 20),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
-              borderSide:
-                  const BorderSide(color: Color(0xFF00704A), width: 1.5),
+              borderSide: BorderSide(color: AppThemeData.green, width: 1.5),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(40),
-              borderSide: const BorderSide(color: Color(0xFF00704A), width: 2),
+              borderSide: BorderSide(color: AppThemeData.green, width: 2),
             ),
           ),
         ),

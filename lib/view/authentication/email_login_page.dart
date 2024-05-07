@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/view/authentication/components/email_login_form.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 class LogInWithEmail extends StatelessWidget {
   const LogInWithEmail({super.key});
@@ -21,14 +22,12 @@ class LogInWithEmail extends StatelessWidget {
               ),
               Text(
                 "Welcome back to",
-                style: GoogleFonts.rye(
-                    color: const Color(0xFF00704A), fontSize: 45),
+                style: GoogleFonts.rye(color: AppThemeData.green, fontSize: 40),
                 textAlign: TextAlign.start,
               ),
               Text(
                 "Home.in",
-                style: GoogleFonts.rye(
-                    color: const Color(0xFF00704A), fontSize: 65),
+                style: GoogleFonts.rye(color: AppThemeData.green, fontSize: 60),
               ),
               const SizedBox(
                 height: 5,
