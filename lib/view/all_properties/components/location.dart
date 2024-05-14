@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class LocationAllProp extends StatelessWidget {
@@ -7,25 +8,24 @@ class LocationAllProp extends StatelessWidget {
   dynamic location;
   @override
   Widget build(BuildContext context) {
-    String value =
-        " ${location["city"]}, ${location["state"]}, ${location["country"]}";
+    String value = " ${location["city"]}, ${location["state"]}";
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.location_on_sharp,
-            color: Colors.white70,
+            color: AppThemeData.themeColor,
             size: 25,
           ),
           Wrap(
             children: [
               Text(
-                value.length <= 35 ? value : '${value.substring(0, 35)}...',
+                value.length <= 30 ? value : '${value.substring(0, 30)}...',
                 style: GoogleFonts.poppins(
-                    color: Colors.white,
+                    color: AppThemeData.themeColor,
                     fontSize: 25,
                     fontWeight: FontWeight.w200),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/controller/propertycontroller.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class DeleteMyProp extends StatelessWidget {
@@ -12,7 +13,6 @@ class DeleteMyProp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(id);
     return SizedBox(
         height: 30,
         child: ElevatedButton(
@@ -22,7 +22,7 @@ class DeleteMyProp extends StatelessWidget {
           },
           child: Text(
             'remove',
-            style: GoogleFonts.poppins(color: Colors.white),
+            style: GoogleFonts.poppins(color: AppThemeData.background),
           ),
         ));
   }
@@ -32,13 +32,15 @@ class DeleteMyProp extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppThemeData.background,
           title: Text(
             'Confirm Deletion',
-            style: GoogleFonts.poppins(),
+            style: GoogleFonts.poppins(color: AppThemeData.themeColor),
           ),
           content: Text(
             'Are you sure you want to delete this item?',
-            style: GoogleFonts.poppins(fontSize: 20),
+            style: GoogleFonts.poppins(
+                fontSize: 20, color: AppThemeData.themeColor),
           ),
           actions: <Widget>[
             TextButton(
@@ -47,7 +49,7 @@ class DeleteMyProp extends StatelessWidget {
               },
               child: Text(
                 'Cancel',
-                style: GoogleFonts.poppins(),
+                style: GoogleFonts.poppins(color: AppThemeData.grey),
               ),
             ),
             TextButton(

@@ -26,11 +26,15 @@ class LocationField extends StatelessWidget {
           onTap: () {},
           child: Text(
             'Location',
-            style: GoogleFonts.poppins(fontSize: 25, color: AppThemeData.white),
+            style: GoogleFonts.poppins(
+                fontSize: 25, color: AppThemeData.themeColor),
           ),
         ),
         const SizedBox(height: 10),
         CSCPicker(
+          dropdownDecoration: BoxDecoration(color: AppThemeData.background),
+          disabledDropdownDecoration:
+              BoxDecoration(color: AppThemeData.black12),
           //disableCountry: true,
           flagState: CountryFlag.DISABLE,
           layout: Layout.vertical,
@@ -38,8 +42,10 @@ class LocationField extends StatelessWidget {
           countryDropdownLabel: "Select country",
           stateDropdownLabel: "Select state",
           cityDropdownLabel: "Select city",
-          selectedItemStyle:
-              GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w500),
+          selectedItemStyle: GoogleFonts.poppins(
+              fontSize: 25,
+              fontWeight: FontWeight.w500,
+              color: AppThemeData.themeColor),
           onCountryChanged: (value) {
             ctrl.location['country'] = value.toString();
           },
@@ -61,19 +67,16 @@ class LocationField extends StatelessWidget {
                 Text(
                   "or",
                   style: GoogleFonts.poppins(
-                      fontSize: 20, color: AppThemeData.white),
+                      fontSize: 20, color: AppThemeData.themeColor),
                 ),
                 GestureDetector(
                   onTap: () async {
                     await ctrl.getUserLocation();
                   },
-                  child: Container(
-                    decoration: BoxDecoration(border: Border.all(width: 3)),
-                    child: Text(
-                      "use current location",
-                      style: GoogleFonts.poppins(
-                          fontSize: 20, color: Colors.blue.shade300),
-                    ),
+                  child: Text(
+                    "use current location",
+                    style: GoogleFonts.poppins(
+                        fontSize: 20, color: Colors.blue.shade300),
                   ),
                 ),
               ],

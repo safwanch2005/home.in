@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class ImageAllProp extends StatelessWidget {
@@ -11,14 +12,18 @@ class ImageAllProp extends StatelessWidget {
       height: 318,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: Colors.black38,
+          //color: Colors.black38,
+
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black12, width: 1)),
+          border: Border.all(color: AppThemeData.themeColor, width: 1)),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Image.network(
-          imgUrl,
-          fit: BoxFit.contain,
+        borderRadius: BorderRadius.circular(15),
+        child: Placeholder(
+          color: AppThemeData.themeColor.withOpacity(0.1),
+          child: Image.network(
+            imgUrl,
+            fit: BoxFit.fill,
+          ),
         ),
       ),
     );

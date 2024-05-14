@@ -19,23 +19,27 @@ class TitleField extends StatelessWidget {
         ),
         Text(
           "Title",
-          style: GoogleFonts.poppins(fontSize: 25, color: AppThemeData.white),
+          style:
+              GoogleFonts.poppins(fontSize: 25, color: AppThemeData.themeColor),
         ),
         const SizedBox(
           height: 10,
         ),
         TextField(
-          style: GoogleFonts.poppins(fontSize: 20),
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            color: AppThemeData.themeColor,
+          ),
           controller: ctrl.title,
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.grey[100],
+            fillColor: AppThemeData.background,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
             ),
             hintText: 'Enter title',
-            hintStyle:
-                GoogleFonts.poppins(fontSize: 23, color: AppThemeData.black),
+            hintStyle: GoogleFonts.poppins(
+                fontSize: 23, color: AppThemeData.themeColor),
           ),
         ),
       ],

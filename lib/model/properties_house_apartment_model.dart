@@ -3,25 +3,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class PropertyHouseAndApartmentModel {
   final String id;
 
-  final String type;
+  final String? type;
   final String title;
   final String description;
   final String price;
   final Map<String, String> location;
   final List<String> imageUrls;
-  final String furnishing;
-  final String constructionStatus;
-  final String listedBy;
-  final String carParking;
-  final String bedrooms;
-  final String bathrooms;
+  final String? furnishing;
+  final String? constructionStatus;
+  final String? listedBy;
+  final String? carParking;
+  final String? bedrooms;
+  final String? bathrooms;
   final String areaftsq;
-  final String floors;
+  final String? floors;
   final String facingDirection;
   final String postedBy;
   final String postedFrom;
   final String category;
   final String userId;
+  final List<String> propertySaved;
 
   PropertyHouseAndApartmentModel(
       {this.id = "",
@@ -43,7 +44,8 @@ class PropertyHouseAndApartmentModel {
       required this.postedBy,
       required this.postedFrom,
       required this.category,
-      required this.userId});
+      required this.userId,
+      required this.propertySaved});
 
   // Factory constructor to create a Property object from a map
   factory PropertyHouseAndApartmentModel.fromMap(DocumentSnapshot map) {
@@ -67,7 +69,8 @@ class PropertyHouseAndApartmentModel {
         postedBy: map['postedBy'],
         postedFrom: map['postedFrom'],
         category: map['category'],
-        userId: map['userId']);
+        userId: map['userId'],
+        propertySaved: List<String>.from(map['propertySaved']));
   }
 
   // Method to convert Property object to a map
@@ -92,7 +95,8 @@ class PropertyHouseAndApartmentModel {
       'postedBy': postedBy,
       'postedFrom': postedFrom,
       'category': category,
-      'userId': userId
+      'userId': userId,
+      'propertySaved': propertySaved
     };
   }
 }

@@ -107,7 +107,7 @@ class _SignUpFormsState extends State<SignUpForms> {
                   return;
                 }
                 if (auth.currentUser != null) {
-                  Get.to(const EmailVerificationPage());
+                  Get.to(() => const EmailVerificationPage());
                 }
               },
               child: ctrl.loading.value

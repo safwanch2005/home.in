@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class PropImageMyProp extends StatelessWidget {
@@ -16,9 +17,12 @@ class PropImageMyProp extends StatelessWidget {
           border: Border.all(color: Colors.black12, width: 1)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.network(
-          imgUrl,
-          fit: BoxFit.contain,
+        child: Placeholder(
+          color: AppThemeData.themeColor.withOpacity(0.1),
+          child: Image.network(
+            imgUrl,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

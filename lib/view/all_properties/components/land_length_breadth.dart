@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class LandLengthBreadth extends StatelessWidget {
@@ -13,13 +14,15 @@ class LandLengthBreadth extends StatelessWidget {
       children: [
         Text(
           type,
-          style: GoogleFonts.poppins(fontSize: 15, color: Colors.white38),
+          style: GoogleFonts.poppins(
+              fontSize: 15, color: AppThemeData.themeColorShade),
         ),
         const SizedBox(
           width: 5,
         ),
         Text(value,
-            style: GoogleFonts.poppins(fontSize: 30, color: Colors.white54)),
+            style: GoogleFonts.poppins(
+                fontSize: 30, color: AppThemeData.themeColor)),
       ],
     );
   }

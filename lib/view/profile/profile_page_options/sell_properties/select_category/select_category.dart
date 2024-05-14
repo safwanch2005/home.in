@@ -15,10 +15,10 @@ class SellPropSelectCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppThemeData.black,
+      backgroundColor: AppThemeData.background,
       appBar: AppBar(
-        backgroundColor: AppThemeData.black,
-        foregroundColor: AppThemeData.white,
+        backgroundColor: AppThemeData.background,
+        foregroundColor: AppThemeData.themeColor,
         title: Text(
           "Sell my property",
           style: GoogleFonts.poppins(fontWeight: FontWeight.w300),
@@ -32,7 +32,7 @@ class SellPropSelectCategory extends StatelessWidget {
               "Select category",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w300,
-                  color: AppThemeData.white,
+                  color: AppThemeData.themeColor,
                   fontSize: 45),
             ),
             const SizedBox(height: 10),

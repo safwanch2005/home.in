@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PropertyLandModel {
   final String id;
-  final String type;
+  final String? type;
   final String title;
   final String description;
   final String price;
   final Map<String, String> location;
   final List<String> imageUrls;
-  final String listedBy;
+  final String? listedBy;
   final String facingDirection;
   final String length;
   final String breadth;
@@ -16,10 +16,12 @@ class PropertyLandModel {
   final String postedBy;
   final String postedFrom;
   final String category;
-  final String userId;
+  final String? userId;
+  List<String> propertySaved;
 
   PropertyLandModel(
       {this.id = "",
+      this.userId,
       required this.type,
       required this.title,
       required this.description,
@@ -34,7 +36,7 @@ class PropertyLandModel {
       required this.postedBy,
       required this.postedFrom,
       required this.category,
-      required this.userId});
+      required this.propertySaved});
 
   // Factory constructor to create a Property object from a map
   factory PropertyLandModel.fromMap(DocumentSnapshot map) {
@@ -54,7 +56,8 @@ class PropertyLandModel {
         postedBy: map['postedBy'],
         postedFrom: map['postedFrom'],
         category: map['category'],
-        userId: map['userId']);
+        userId: map['userId'],
+        propertySaved: List<String>.from(map['propertySaved']));
   }
 
   // Method to convert Property object to a map
@@ -75,7 +78,8 @@ class PropertyLandModel {
       'postedBy': postedBy,
       'postedFrom': postedFrom,
       'category': category,
-      'userId': userId
+      'userId': userId,
+      'propertySaved': propertySaved
     };
   }
 }

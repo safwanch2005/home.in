@@ -200,7 +200,7 @@ class AuthController extends GetxController {
         );
 
         await auth.signInWithCredential(credential);
-        Get.to(() => BottomNavBar());
+        Get.offAll(() => BottomNavBar());
       }
     } catch (e) {
       Get.snackbar("Error", "$e", snackPosition: SnackPosition.BOTTOM);
@@ -311,7 +311,7 @@ class AuthController extends GetxController {
             snackPosition: SnackPosition.BOTTOM);
 
         if (auth.currentUser!.displayName != null) {
-          Get.to(() => BottomNavBar());
+          Get.offAll(() => BottomNavBar());
         } else {
           Get.to(() => UserNameNumSignUp());
           saveUserNameNum();
@@ -340,7 +340,7 @@ class AuthController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
 
       print(auth.currentUser);
-      Get.to(() => BottomNavBar());
+      Get.offAll(() => BottomNavBar());
     }
     //else {
     //   Get.snackbar("Error", "-----", snackPosition: SnackPosition.BOTTOM);

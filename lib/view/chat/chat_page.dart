@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:real_estate_application/view/chat/widgets/center.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
 class ChatPage extends StatelessWidget {
@@ -7,10 +8,8 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppThemeData.black,
-      body: Center(
-          child: Icon(Icons.message_outlined,
-              size: 100, color: AppThemeData.grey)),
+      backgroundColor: AppThemeData.background,
+      body: center(),
     );
   }
 }

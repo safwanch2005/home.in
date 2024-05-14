@@ -10,7 +10,6 @@ import 'package:real_estate_application/view/theme/theme_data.dart';
 // ignore: must_be_immutable
 class EmailLogInForm extends StatelessWidget {
   EmailLogInForm({super.key});
-  bool? isAgreedTermsAndConditions = false;
   final ctrl = Get.put(AuthController());
 
   @override

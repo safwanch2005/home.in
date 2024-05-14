@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class DetailsContainerHouseApart extends StatelessWidget {
@@ -17,14 +18,23 @@ class DetailsContainerHouseApart extends StatelessWidget {
           padding: const EdgeInsets.only(left: 25, bottom: 5),
           child: Text(
             "Details",
-            style: GoogleFonts.poppins(fontSize: 30, color: Colors.white),
+            style: GoogleFonts.poppins(
+                fontSize: 30, color: AppThemeData.themeColor),
           ),
         ),
         Container(
           padding: const EdgeInsets.all(15),
-          decoration: const BoxDecoration(
-            color: Colors.white24,
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            color: AppThemeData.background,
+            boxShadow: [
+              BoxShadow(
+                color: AppThemeData.themeColor.withOpacity(0.5), // Shadow color
+                spreadRadius: 5, // Spread radius
+                blurRadius: 7, // Blur radius
+                offset: const Offset(0, 3), // Offset
+              ),
+            ],
+            borderRadius: const BorderRadius.all(
               Radius.circular(20),
             ),
           ),
@@ -76,7 +86,9 @@ class DetailsContainerHouseApart extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
-          fontSize: 23, fontWeight: FontWeight.w700, color: Colors.white30),
+          fontSize: 23,
+          fontWeight: FontWeight.w700,
+          color: AppThemeData.themeColorShade),
     );
   }
 
@@ -84,7 +96,9 @@ class DetailsContainerHouseApart extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
-          fontSize: 23, fontWeight: FontWeight.w700, color: Colors.white70),
+          fontSize: 23,
+          fontWeight: FontWeight.w700,
+          color: AppThemeData.themeColor),
     );
   }
 }

@@ -13,18 +13,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppThemeData.black,
+      backgroundColor: AppThemeData.background,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            //vertical: MediaQuery.of(context).size.height ,
+            vertical: MediaQuery.of(context).size.height * 0.02,
             horizontal: MediaQuery.of(context).size.width * 0.05,
           ),
           child: Column(
             children: [
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * 0.01,
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -33,15 +30,12 @@ class HomePage extends StatelessWidget {
                     "Find your\nproperty",
                     style: GoogleFonts.poppins(
                         height: 1.1,
-                        color: AppThemeData.grey,
+                        color: AppThemeData.themeColor,
                         fontSize: 55,
                         fontWeight: FontWeight.w400),
                   ),
-                  // SizedBox(
-                  //   width: MediaQuery.of(context).size.width * 0.2,
-                  // ),
                   CircleAvatar(
-                    backgroundColor: AppThemeData.greyShade,
+                    backgroundColor: AppThemeData.themeColor,
                     radius: 50,
                   )
                 ],
@@ -54,7 +48,7 @@ class HomePage extends StatelessWidget {
                 child: Text(
                   "Best property search",
                   style: GoogleFonts.poppins(
-                      color: AppThemeData.grey,
+                      color: AppThemeData.themeColorShade,
                       fontSize: 20,
                       fontWeight: FontWeight.w400),
                 ),

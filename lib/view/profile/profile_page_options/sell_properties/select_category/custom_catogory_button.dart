@@ -16,9 +16,17 @@ class CustomCategoryBotton extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).size.height * 0.06,
           width: MediaQuery.of(context).size.width * 0.7,
-          decoration: const BoxDecoration(
-            color: Colors.white24,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+          decoration: BoxDecoration(
+            color: AppThemeData.background,
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: AppThemeData.themeColor.withOpacity(0.4), // Shadow color
+                spreadRadius: 4, // Spread radius
+                blurRadius: 10, // Blur radius
+                offset: const Offset(0, 3), // Offset
+              ),
+            ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -28,7 +36,7 @@ class CustomCategoryBotton extends StatelessWidget {
               ),
               FaIcon(
                 icon,
-                color: AppThemeData.white,
+                color: AppThemeData.themeColor,
                 size: 20,
               ),
               SizedBox(
@@ -37,13 +45,13 @@ class CustomCategoryBotton extends StatelessWidget {
               Text(
                 text,
                 style: GoogleFonts.poppins(
-                    fontSize: 25, color: AppThemeData.white),
+                    fontSize: 25, color: AppThemeData.themeColor),
               )
             ],
           ),
         ),
         const SizedBox(
-          height: 10,
+          height: 15,
         )
       ],
     );

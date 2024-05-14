@@ -8,23 +8,71 @@ import 'package:image_picker/image_picker.dart';
 import 'package:real_estate_application/controller/propertycontroller.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
-class AddImage extends StatefulWidget {
-  const AddImage({super.key});
+class EditImage extends StatefulWidget {
+  const EditImage({super.key});
 
   @override
-  State<AddImage> createState() => _AddImageState();
+  State<EditImage> createState() => _EditImageState();
 }
 
-class _AddImageState extends State<AddImage> {
-  final List<File> _images = [];
+class _EditImageState extends State<EditImage> {
   PropertyController ctrl = Get.find();
+  final List<File> images = [];
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Divider(color: AppThemeData.themeColor),
+        const SizedBox(height: 15),
+        Align(
+          child: Text(
+            "Edit photos (min 4)",
+            style: GoogleFonts.poppins(
+                fontSize: 25, color: AppThemeData.themeColor),
+          ),
+        ),
+        Column(
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Wrap(
+              children: [
+                for (int i = 0; i < (ctrl.imageUrls.length); i++)
+                  GestureDetector(
+                    onTap: () {
+                      removeImage(i);
+                    },
+                    child: ImageContainer(
+                      image: ctrl.imageUrls[i],
+                    ),
+                  ),
+                InkWell(
+                  onTap: () async {
+                    await selectAndUploadImage();
+                  },
+                  child: const ImageContainer(
+                    icon: FontAwesomeIcons.plus,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+          ],
+        ),
+      ],
+    );
+  }
 
-  _selectAndUploadImage() async {
+  selectAndUploadImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      final croppedFile = await _cropImage(File(pickedFile.path)) as File;
-      _images.add(croppedFile);
+      final croppedFile = await cropImage(File(pickedFile.path)) as File;
+      images.add(croppedFile);
       await ctrl.uploadImageToFirebase(croppedFile);
       setState(() {});
     } else {
@@ -33,8 +81,7 @@ class _AddImageState extends State<AddImage> {
     }
   }
 
-  _cropImage(File imageFile) async {
-    //File croppedFile =
+  cropImage(File imageFile) async {
     final croppedFile = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatioPresets: [
@@ -43,8 +90,8 @@ class _AddImageState extends State<AddImage> {
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: "Crop Image",
-          toolbarColor: AppThemeData.background,
-          toolbarWidgetColor: AppThemeData.themeColor,
+          toolbarColor: Colors.black,
+          toolbarWidgetColor: Colors.amber,
         )
       ],
     );
@@ -56,63 +103,13 @@ class _AddImageState extends State<AddImage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 10,
-        ),
-        Divider(
-          color: AppThemeData.themeColor,
-        ),
-        const SizedBox(height: 15),
-        Align(
-          child: Text(
-            "Add photos (min 4)",
-            style: GoogleFonts.poppins(
-                fontSize: 25, color: AppThemeData.themeColor),
-          ),
-        ),
-        Column(
-          children: [
-            const SizedBox(height: 15),
-            Wrap(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // for (var image in _images)
-                for (int i = 0; i < _images.length; i++)
-                  GestureDetector(
-                      onTap: () async {
-                        removeImage(i);
-                      },
-                      child: ImageContainer(image: _images[i])),
-                //if (_images.length < 4)
-                InkWell(
-                  onLongPress: () {},
-                  onTap: () async {
-                    await _selectAndUploadImage();
-                  },
-                  child: const ImageContainer(
-                    icon: FontAwesomeIcons.plus,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
-          ],
-        ),
-        const Divider(),
-      ],
-    );
-  }
-
   removeImage(int i) {
     try {
       ctrl.imageUrls.removeAt(i);
-      _images.remove(_images[i]);
+      //_images.remove(_images[i]);
       Get.snackbar("", "Image ${i + 1} removed",
           backgroundColor: Colors.red, snackPosition: SnackPosition.BOTTOM);
+
       setState(() {});
     } catch (e) {
       Get.snackbar(
@@ -123,9 +120,8 @@ class _AddImageState extends State<AddImage> {
 }
 
 class ImageContainer extends StatelessWidget {
-  final File? image;
+  final String? image;
   final IconData? icon;
-
   const ImageContainer({super.key, this.image, this.icon});
 
   @override
@@ -144,8 +140,8 @@ class ImageContainer extends StatelessWidget {
             ? Stack(
                 children: [
                   Center(
-                    child: Image.file(
-                      image!,
+                    child: Image.network(
+                      image.toString(),
                       fit: BoxFit.fill,
                     ),
                   ),

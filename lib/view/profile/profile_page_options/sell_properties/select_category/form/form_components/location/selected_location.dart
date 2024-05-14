@@ -20,9 +20,9 @@ class SelectedLocation extends StatelessWidget {
                 "${ctrl.location["city"]}, ${ctrl.location["state"]}, ${ctrl.location["country"]}",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w500,
                     fontSize: 25,
-                    color: AppThemeData.white),
+                    color: AppThemeData.themeColor),
               );
       }),
     );

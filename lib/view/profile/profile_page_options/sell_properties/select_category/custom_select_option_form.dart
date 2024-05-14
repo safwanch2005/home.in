@@ -10,10 +10,12 @@ class CustomSelectOptionForm extends StatefulWidget {
     super.key,
     required this.text,
     required this.options,
+    required this.data,
   });
   final String text;
   final List<String> options;
   int? selectedOption;
+  dynamic data;
 
   @override
   State<CustomSelectOptionForm> createState() => _CustomSelectOptionFormState();
@@ -21,14 +23,21 @@ class CustomSelectOptionForm extends StatefulWidget {
 
 class _CustomSelectOptionFormState extends State<CustomSelectOptionForm> {
   PropertyController ctrl = Get.find();
+  int i = 0;
+
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_contains
+    if (widget.options.indexOf(widget.data.toString()) != -1) {
+      i = widget.options.indexOf(widget.data.toString());
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.text,
-          style: GoogleFonts.poppins(fontSize: 30, color: AppThemeData.white),
+          style:
+              GoogleFonts.poppins(fontSize: 30, color: AppThemeData.themeColor),
         ),
         const SizedBox(
           height: 10,
@@ -41,16 +50,19 @@ class _CustomSelectOptionFormState extends State<CustomSelectOptionForm> {
               (index) => Padding(
                 padding: const EdgeInsets.only(right: 10, bottom: 5),
                 child: ChoiceChip(
+                  backgroundColor: AppThemeData.background,
                   padding: const EdgeInsets.all(3),
                   label: Text(
                     widget.options[index],
                     style: GoogleFonts.poppins(
                       fontSize: 25,
-                      color: AppThemeData.black,
+                      color: AppThemeData.themeColor,
                     ),
                   ),
-                  selected: widget.selectedOption == index,
-                  selectedColor: AppThemeData.white,
+                  selected: widget.data == null
+                      ? widget.selectedOption == index
+                      : i == index,
+                  selectedColor: AppThemeData.blackShade,
                   labelStyle: GoogleFonts.poppins(
                     fontSize: 25,
                     color: AppThemeData.grey,
@@ -59,6 +71,7 @@ class _CustomSelectOptionFormState extends State<CustomSelectOptionForm> {
                     setState(() {
                       widget.selectedOption = selected ? index : null;
                       setTheValue(widget.text, widget.options[index]);
+                      widget.data = null;
                     });
                   },
                 ),

@@ -7,12 +7,12 @@ class LocationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppThemeData.black,
+      backgroundColor: AppThemeData.background,
       body: Center(
           child: Icon(
         Icons.location_on_outlined,
         size: 100,
-        color: AppThemeData.grey,
+        color: AppThemeData.themeColor,
       )),
     );
   }

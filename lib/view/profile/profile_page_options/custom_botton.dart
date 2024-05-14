@@ -13,9 +13,17 @@ class ProfileCustomBotton extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.06,
       width: double.infinity,
-      decoration: const BoxDecoration(
-          color: Colors.white24,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+      decoration: BoxDecoration(
+          color: AppThemeData.background,
+          boxShadow: [
+            BoxShadow(
+              color: AppThemeData.themeColor.withOpacity(0.5), // Shadow color
+              spreadRadius: 1, // Spread radius
+              blurRadius: 10, // Blur radius
+              offset: const Offset(0, 3), // Offset
+            ),
+          ],
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
       child: Row(
         children: [
           SizedBox(
@@ -24,14 +32,15 @@ class ProfileCustomBotton extends StatelessWidget {
           FaIcon(
             icon,
             size: 20,
-            color: AppThemeData.white,
+            color: AppThemeData.themeColor,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.06,
           ),
           Text(
             text,
-            style: GoogleFonts.poppins(fontSize: 20, color: AppThemeData.white),
+            style: GoogleFonts.poppins(
+                fontSize: 20, color: AppThemeData.themeColor),
           )
         ],
       ),

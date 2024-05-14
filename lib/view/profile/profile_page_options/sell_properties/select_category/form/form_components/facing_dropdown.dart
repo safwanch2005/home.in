@@ -32,25 +32,38 @@ class FacingDropDown extends StatelessWidget {
         ),
         Text(
           'Facing',
-          style: GoogleFonts.poppins(fontSize: 25, color: AppThemeData.white),
+          style:
+              GoogleFonts.poppins(fontSize: 25, color: AppThemeData.themeColor),
         ),
         const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
               child: TextField(
-                style: GoogleFonts.poppins(fontSize: 20),
+                style: GoogleFonts.poppins(
+                    fontSize: 20, color: AppThemeData.themeColor),
                 controller: _textController,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.grey[100],
+                  fillColor: AppThemeData.background,
                   border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: AppThemeData.themeColor)),
+                  focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: AppThemeData
+                          .themeColor, // Set focused border color here
+                    ),
                   ),
                   hintText: ' ${ctrl.facingDirection}',
                   hintStyle: GoogleFonts.poppins(
-                      fontSize: 23, color: AppThemeData.black),
-                  suffixIcon: const Icon(Icons.arrow_drop_down, size: 30),
+                      fontSize: 23, color: AppThemeData.themeColor),
+                  suffixIcon: Icon(
+                    Icons.arrow_drop_down,
+                    size: 30,
+                    color: AppThemeData.themeColor,
+                  ),
                 ),
                 readOnly: true,
                 onTap: () {
@@ -66,7 +79,7 @@ class FacingDropDown extends StatelessWidget {
 
   void _showDirectionDropdown(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: AppThemeData.grey,
+      backgroundColor: AppThemeData.background,
       context: context,
       builder: (BuildContext builder) {
         return SizedBox(
@@ -79,7 +92,7 @@ class FacingDropDown extends StatelessWidget {
                   directions[index],
                   style: GoogleFonts.poppins(
                     fontSize: 30,
-                    color: AppThemeData.white,
+                    color: AppThemeData.themeColor,
                   ),
                   textAlign: TextAlign.center,
                 ),

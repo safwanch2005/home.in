@@ -8,6 +8,7 @@ import 'package:real_estate_application/view/chat/chat_page.dart';
 import 'package:real_estate_application/view/home/home_page.dart';
 import 'package:real_estate_application/view/location/location_page.dart';
 import 'package:real_estate_application/view/profile/profile.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class BottomNavBar extends StatelessWidget {
@@ -27,22 +28,26 @@ class BottomNavBar extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           body: Obx(() => pages.elementAt(indexctrl.index.value)),
-          backgroundColor: const Color.fromARGB(255, 64, 64, 64),
+          // backgroundColor: AppThemeData.amber,
           bottomNavigationBar: Theme(
             data: Theme.of(context).copyWith(
-              canvasColor: Colors.black,
+              canvasColor: AppThemeData.background,
               textTheme: Theme.of(context).textTheme.copyWith(
-                    bodySmall: GoogleFonts.poppins(color: Colors.white),
+                    bodySmall:
+                        GoogleFonts.poppins(color: AppThemeData.themeColor),
                   ),
             ),
             child: Obx(
               () => BottomNavigationBar(
                 currentIndex: indexctrl.index.value,
-                items: const [
+                selectedItemColor: AppThemeData.themeColor,
+                items: [
                   BottomNavigationBarItem(
+                    backgroundColor: AppThemeData.background,
                     icon: FaIcon(
                       FontAwesomeIcons.house,
                       size: 20,
+                      color: AppThemeData.themeColor,
                     ),
                     label: "home",
                   ),
@@ -50,6 +55,7 @@ class BottomNavBar extends StatelessWidget {
                     icon: FaIcon(
                       FontAwesomeIcons.mapLocationDot,
                       size: 20,
+                      color: AppThemeData.themeColor,
                     ),
                     label: 'location',
                   ),
@@ -57,6 +63,7 @@ class BottomNavBar extends StatelessWidget {
                     icon: FaIcon(
                       FontAwesomeIcons.building,
                       size: 20,
+                      color: AppThemeData.themeColor,
                     ),
                     label: "properties",
                   ),
@@ -64,6 +71,7 @@ class BottomNavBar extends StatelessWidget {
                     icon: FaIcon(
                       FontAwesomeIcons.comments,
                       size: 20,
+                      color: AppThemeData.themeColor,
                     ),
                     label: 'message',
                   ),
@@ -71,6 +79,7 @@ class BottomNavBar extends StatelessWidget {
                     icon: FaIcon(
                       FontAwesomeIcons.user,
                       size: 20,
+                      color: AppThemeData.themeColor,
                     ),
                     label: "profile",
                   ),

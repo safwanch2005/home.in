@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/firebase/firebase_constants.dart';
 import 'package:real_estate_application/view/authentication/authentication_page.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/custom_botton.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 class LogOut extends StatelessWidget {
   const LogOut({super.key});
@@ -27,13 +28,15 @@ class LogOut extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppThemeData.background,
           title: Text(
             'Confirm Deletion',
-            style: GoogleFonts.poppins(),
+            style: GoogleFonts.poppins(color: AppThemeData.themeColor),
           ),
           content: Text(
             'Are you sure you want to log out?',
-            style: GoogleFonts.poppins(fontSize: 17),
+            style: GoogleFonts.poppins(
+                fontSize: 17, color: AppThemeData.themeColor),
           ),
           actions: <Widget>[
             TextButton(
@@ -42,7 +45,7 @@ class LogOut extends StatelessWidget {
               },
               child: Text(
                 'no',
-                style: GoogleFonts.poppins(),
+                style: GoogleFonts.poppins(color: AppThemeData.black),
               ),
             ),
             TextButton(

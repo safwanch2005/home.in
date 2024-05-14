@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppThemeData.black,
+      backgroundColor: AppThemeData.background,
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.05,
@@ -50,107 +50,8 @@ class ProfilePage extends StatelessWidget {
             Text(
               "version 1.0.0",
               style: GoogleFonts.poppins(
-                  color: AppThemeData.greyShade, fontSize: 15),
+                  color: AppThemeData.themeColorShade, fontSize: 15),
             ),
-            //  const ProfileCustomBotton(),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.5,
-            // ),
-            // GestureDetector(
-            //   onTap: () {
-            //     print(
-            //         "---------------------------${auth.currentUser}---------------------");
-            //   },
-            //   child: Icon(Icons.account_circle_outlined,
-            //       size: 100, color: AppThemeData.grey),
-            // ),
-            // TextButton(
-            //   onPressed: () async {
-            //     await auth.signOut();
-            //     Get.offAll(() => const AuthenticationPage());
-            //   },
-            //   child: Text(
-            //     "log out",
-            //     style: GoogleFonts.poppins(
-            //         fontSize: 20, color: AppThemeData.red),
-            //   ),
-            // ),
-            // auth.currentUser!.emailVerified && auth.currentUser != null
-            //     ? Column(
-            //         children: [
-            //           const Icon(
-            //             Icons.verified,
-            //             color: Colors.blue,
-            //             size: 50,
-            //           ),
-            //           Text(
-            //             auth.currentUser!.displayName.toString(),
-            //             style: GoogleFonts.poppins(
-            //                 fontSize: 20, color: Colors.blue),
-            //           ),
-            //         ],
-            //       )
-            //     : Column(
-            //         children: [
-            //           const Icon(
-            //             Icons.verified,
-            //             color: Colors.blue,
-            //             size: 50,
-            //           ),
-            //           Text(
-            //             auth.currentUser!.displayName.toString(),
-            //             style: GoogleFonts.poppins(
-            //                 fontSize: 20, color: Colors.blue),
-            //           ),
-            //           Text(
-            //             auth.currentUser?.emailVerified == true
-            //                 ? "email Verified-------"
-            //                 : auth.currentUser?.phoneNumber != null &&
-            //                         auth.currentUser?.phoneNumber != null
-            //                     ? "phone Verified----------"
-            //                     : "not verified-------",
-            //             style: GoogleFonts.poppins(
-            //                 fontSize: 20, color: AppThemeData.white),
-            //           ),
-            //           // Padding(
-            //           //   padding: const EdgeInsets.all(30),
-            //           //   child: ElevatedButton(
-            //           //     onPressed: () {
-            //           //       try {
-            //           //         FirebaseAuth.instance.currentUser
-            //           //             ?.sendEmailVerification();
-            //           //       } catch (e) {
-            //           //         debugPrint('$e');
-            //           //       }
-            //           //     },
-            //           //     child: Text(
-            //           //       "send verification link",
-            //           //       style: GoogleFonts.poppins(
-            //           //           fontSize: 20, color: Colors.blue),
-            //           //     ),
-            //           //   ),
-            //           // )
-            //         ],
-            //       ),
-            // const SizedBox(
-            //   height: 150,
-            // ),
-            // Text(
-            //   auth.currentUser?.email != null
-            //       ? auth.currentUser!.email!
-            //       : auth.currentUser?.phoneNumber ?? "Something went wrong",
-            //   style: GoogleFonts.poppins(fontSize: 20, color: Colors.purple),
-            // ),
-            // Text(
-            //   auth.currentUser!.emailVerified
-            //       ? "email Verified"
-            //       : "email not verified",
-            //   style: GoogleFonts.poppins(
-            //       fontSize: 20, color: AppThemeData.white),
-            // ),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.3,
-            // )
           ],
         ),
       ),

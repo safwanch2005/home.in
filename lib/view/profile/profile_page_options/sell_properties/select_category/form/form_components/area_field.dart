@@ -19,24 +19,26 @@ class AreaTextField extends StatelessWidget {
         ),
         Text(
           "Area(ft^2)",
-          style: GoogleFonts.poppins(fontSize: 25, color: AppThemeData.white),
+          style:
+              GoogleFonts.poppins(fontSize: 25, color: AppThemeData.themeColor),
         ),
         const SizedBox(
           height: 10,
         ),
         TextField(
-          style: GoogleFonts.poppins(fontSize: 20),
+          style:
+              GoogleFonts.poppins(fontSize: 20, color: AppThemeData.themeColor),
           keyboardType: TextInputType.number,
           controller: ctrl.areaftsq,
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.grey[100],
+            fillColor: AppThemeData.background,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
             ),
             hintText: 'Area in square feet',
-            hintStyle:
-                GoogleFonts.poppins(fontSize: 23, color: AppThemeData.black),
+            hintStyle: GoogleFonts.poppins(
+                fontSize: 23, color: AppThemeData.themeColor),
             suffixText: "ft^2",
           ),
         ),

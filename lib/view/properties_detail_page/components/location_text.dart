@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class LocationTextDetailPage extends StatelessWidget {
@@ -15,21 +16,23 @@ class LocationTextDetailPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(
+          const SizedBox(
+            width: 10,
+          ),
+          Icon(
             Icons.location_on_sharp,
-            color: Colors.white38,
+            color: AppThemeData.themeColor,
             size: 25,
           ),
-          Wrap(
-            children: [
-              Text(
-                value.length <= 36 ? value : '${value.substring(0, 35)}...',
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w200),
-              ),
-            ],
+          Flexible(
+            child: Text(
+              value,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.poppins(
+                  color: AppThemeData.themeColor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w300),
+            ),
           ),
         ],
       ),

@@ -8,7 +8,6 @@ import 'package:real_estate_application/view/theme/theme_data.dart';
 class ProfileDetails extends StatelessWidget {
   ProfileDetails({super.key});
   final AuthController ctrl = Get.find<AuthController>();
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,11 +15,25 @@ class ProfileDetails extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CircleAvatar(
-              radius: 70,
-              backgroundColor: Colors.white12,
-              backgroundImage: AssetImage(
-                "assets/profile.jpeg",
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(70),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppThemeData.themeColor
+                        .withOpacity(0.3), // Shadow color
+                    spreadRadius: 5, // Spread radius
+                    blurRadius: 10, // Blur radius
+                    offset: const Offset(0, 3), // Offset
+                  ),
+                ],
+              ),
+              child: const CircleAvatar(
+                radius: 70,
+                backgroundColor: Colors.black12,
+                backgroundImage: AssetImage(
+                  "assets/profile.jpeg",
+                ),
               ),
             ),
             Column(
@@ -29,26 +42,18 @@ class ProfileDetails extends StatelessWidget {
                 Text(
                   auth.currentUser!.displayName.toString(),
                   style: GoogleFonts.poppins(
-                      fontSize: 30, color: AppThemeData.white),
+                      fontSize: 30, color: AppThemeData.themeColor),
                 ),
                 Text(
                   auth.currentUser!.emailVerified
                       ? auth.currentUser!.email.toString()
                       : auth.currentUser!.phoneNumber.toString(),
                   style: GoogleFonts.poppins(
-                      fontSize: 13, color: AppThemeData.greyShade),
+                      fontSize: 13, color: AppThemeData.themeColorShade),
                 ),
               ],
             ),
-            Column(
-              //mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(Icons.sunny, color: AppThemeData.white, size: 30),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                )
-              ],
-            )
+            const SizedBox()
           ],
         ),
       ],

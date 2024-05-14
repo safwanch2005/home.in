@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
 class BackAndShareIcon extends StatelessWidget {
   const BackAndShareIcon({super.key});
@@ -15,23 +16,23 @@ class BackAndShareIcon extends StatelessWidget {
             onTap: () {
               Get.back();
             },
-            child: const CircleAvatar(
+            child: CircleAvatar(
               backgroundColor: Colors.black26,
               radius: 23,
               child: Icon(
                 Icons.arrow_back_ios_new_outlined,
                 size: 25,
-                color: Colors.white,
+                color: AppThemeData.themeColor,
               ),
             ),
           ),
-          const CircleAvatar(
+          CircleAvatar(
             backgroundColor: Colors.black26,
             radius: 23,
             child: Icon(
               Icons.share,
               size: 25,
-              color: Colors.white,
+              color: AppThemeData.themeColor,
             ),
           ),
         ],

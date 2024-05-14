@@ -8,6 +8,7 @@ import 'package:real_estate_application/view/profile/profile_page_options/sell_p
 import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/form/form_components/area_field.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/form/form_components/breadth_field.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/form/form_components/description_field.dart';
+import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/form/form_components/edit_image.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/form/form_components/facing_dropdown.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/form/form_components/length_field.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/form/form_components/location/location_field.dart';
@@ -28,14 +29,15 @@ class FormPage extends StatefulWidget {
 
 class _FormPageState extends State<FormPage> {
   final propCtrl = Get.put(PropertyController());
-
+  final isEditMode = PropertyController.editMode;
+  final data = PropertyController.dataForEdit;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppThemeData.black,
+      backgroundColor: AppThemeData.background,
       appBar: AppBar(
-        backgroundColor: AppThemeData.black,
-        foregroundColor: AppThemeData.white,
+        backgroundColor: AppThemeData.background,
+        foregroundColor: AppThemeData.themeColor,
         title: Text(
           propCtrl.category,
           style: GoogleFonts.poppins(
@@ -46,7 +48,6 @@ class _FormPageState extends State<FormPage> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-            // vertical: MediaQuery.of(context).size.height * 0.05,
             horizontal: MediaQuery.of(context).size.height * 0.03),
         child: SingleChildScrollView(
           child: Column(
@@ -55,6 +56,7 @@ class _FormPageState extends State<FormPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomSelectOptionForm(
+                    data: propCtrl.type,
                     text: "Type",
                     options: const [
                       "For sale",
@@ -64,6 +66,7 @@ class _FormPageState extends State<FormPage> {
                   widget.isLand
                       ? const SizedBox()
                       : CustomSelectOptionForm(
+                          data: propCtrl.furnishing,
                           text: "Furnishing",
                           options: const [
                             'Fully Furnished',
@@ -75,6 +78,7 @@ class _FormPageState extends State<FormPage> {
                   widget.isLand
                       ? const SizedBox()
                       : CustomSelectOptionForm(
+                          data: propCtrl.constructionStatus,
                           text: "Construction Status",
                           options: const [
                             "New Launch",
@@ -83,6 +87,7 @@ class _FormPageState extends State<FormPage> {
                           ],
                         ),
                   CustomSelectOptionForm(
+                    data: propCtrl.listedBy,
                     text: "Listed by",
                     options: const [
                       "Dealer",
@@ -92,12 +97,14 @@ class _FormPageState extends State<FormPage> {
                   widget.isLand
                       ? const SizedBox()
                       : CustomSelectOptionForm(
+                          data: propCtrl.carParking,
                           text: "Car parking",
                           options: const ["0", "1", "2", "3+"],
                         ),
                   widget.isLand
                       ? const SizedBox()
                       : CustomSelectOptionForm(
+                          data: propCtrl.bedrooms,
                           text: "No. of Bedrooms",
                           options: const ["0", "1", "2", "3+"],
                         ),
@@ -105,12 +112,14 @@ class _FormPageState extends State<FormPage> {
                   widget.isLand
                       ? const SizedBox()
                       : CustomSelectOptionForm(
+                          data: propCtrl.bathrooms,
                           text: "No. of Bathrooms",
                           options: const ["0", "1", "2", "3+"],
                         ),
                   widget.isLand
                       ? const SizedBox()
                       : CustomSelectOptionForm(
+                          data: propCtrl.floors,
                           text: "No. of floors",
                           options: const ["0", "1", "2", "3+"],
                         ),
@@ -122,13 +131,9 @@ class _FormPageState extends State<FormPage> {
                   PriceField(),
                   LocationField(),
                   SelectedLocation(),
-                  const AddImage(),
-                  // propCtrl.imageUrls.isEmpty
-                  //     ? Text(
-                  //         "Is Empty....",
-                  //         style: GoogleFonts.poppins(fontSize: 30),
-                  //       )
-                  //     : Image(image: NetworkImage(propCtrl.imageUrls.last)),
+                  PropertyController.editMode
+                      ? const EditImage()
+                      : const AddImage(),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.015,
                   ),
@@ -140,47 +145,73 @@ class _FormPageState extends State<FormPage> {
                         height: 60,
                         width: double.infinity,
                         child: propCtrl.isLoading.value
-                            ? CircularProgressIndicator(
-                                color: AppThemeData.white,
-                              )
-                            : ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppThemeData.white),
-                                child: Text(
-                                  "Upload",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 30, color: AppThemeData.black),
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: AppThemeData.themeColor,
                                 ),
-                                onPressed: () {
-                                  propCtrl.addPropertyDetails(
-                                    category: propCtrl.category,
-                                    type: propCtrl.type,
-                                    title: propCtrl.title.text,
-                                    description: propCtrl.description.text,
-                                    price: propCtrl.price.text,
-                                    location: propCtrl.location,
-                                    imageUrls: propCtrl.imageUrls,
-                                    listedBy: propCtrl.listedBy,
-                                    facingDirection: propCtrl.facingDirection,
-                                    length: propCtrl.length.text,
-                                    breadth: propCtrl.breadth.text,
-                                    areaftsq: propCtrl.areaftsq.text,
-                                    bathrooms: propCtrl.bathrooms,
-                                    bedrooms: propCtrl.bedrooms,
-                                    carParking: propCtrl.carParking,
-                                    constructionStatus:
-                                        propCtrl.constructionStatus,
-                                    furnishing: propCtrl.furnishing,
-                                    floors: propCtrl.floors,
-                                    plotArea: propCtrl.plotArea.text,
-                                    postedBy: auth.currentUser!.displayName!,
-                                    postedFrom: auth.currentUser!.phoneNumber ??
-                                        auth.currentUser!.email ??
-                                        "",
-
-                                    // postedFrom: auth.currentUser.phoneNumber == ""?auth.currentUser!.email : auth.currentUser.phoneNumber
-                                  );
-                                }),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  color: AppThemeData.background,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(30)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppThemeData.themeColor
+                                          .withOpacity(0.5), // Shadow color
+                                      spreadRadius: 5, // Spread radius
+                                      blurRadius: 8, // Blur radius
+                                      offset: const Offset(0, 0), // Offset
+                                    ),
+                                  ],
+                                ),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            AppThemeData.background),
+                                    child: Text(
+                                      "Upload",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 30,
+                                          color: AppThemeData.themeColor),
+                                    ),
+                                    onPressed: () {
+                                      PropertyController.editMode
+                                          ? propCtrl.editProperty()
+                                          : propCtrl.addPropertyDetails(
+                                              category: propCtrl.category,
+                                              type: propCtrl.type,
+                                              title: propCtrl.title.text,
+                                              description:
+                                                  propCtrl.description.text,
+                                              price: propCtrl.price.text,
+                                              location: propCtrl.location,
+                                              imageUrls: propCtrl.imageUrls,
+                                              listedBy: propCtrl.listedBy,
+                                              facingDirection:
+                                                  propCtrl.facingDirection,
+                                              length: propCtrl.length.text,
+                                              breadth: propCtrl.breadth.text,
+                                              areaftsq: propCtrl.areaftsq.text,
+                                              bathrooms: propCtrl.bathrooms,
+                                              bedrooms: propCtrl.bedrooms,
+                                              carParking: propCtrl.carParking,
+                                              constructionStatus:
+                                                  propCtrl.constructionStatus,
+                                              furnishing: propCtrl.furnishing,
+                                              floors: propCtrl.floors,
+                                              plotArea: propCtrl.plotArea.text,
+                                              propertySaved:
+                                                  propCtrl.propertySaved,
+                                              postedBy: auth
+                                                  .currentUser!.displayName!,
+                                              postedFrom: auth.currentUser!
+                                                      .phoneNumber ??
+                                                  auth.currentUser!.email ??
+                                                  "",
+                                            );
+                                    }),
+                              ),
                       ),
                     ),
                   ),
@@ -198,7 +229,7 @@ class _FormPageState extends State<FormPage> {
 
   @override
   void dispose() {
-    propCtrl.type = "";
+    propCtrl.type = null;
     propCtrl.title.clear();
     propCtrl.description.clear();
     propCtrl.price.clear();
@@ -206,21 +237,23 @@ class _FormPageState extends State<FormPage> {
     propCtrl.location["state"] = "";
     propCtrl.location["city"] = "";
     propCtrl.imageUrls.clear();
-    propCtrl.listedBy = "";
+    propCtrl.listedBy = null;
     propCtrl.facingDirection = "select direction";
     propCtrl.length.clear();
     propCtrl.breadth.clear();
     propCtrl.areaftsq.clear();
-    propCtrl.bathrooms = "";
-    propCtrl.bedrooms = "";
-    propCtrl.carParking = "";
-    propCtrl.constructionStatus = "";
-    propCtrl.furnishing = "";
-    propCtrl.floors = "";
+    propCtrl.bathrooms = null;
+    propCtrl.bedrooms = null;
+    propCtrl.carParking = null;
+    propCtrl.constructionStatus = null;
+    propCtrl.furnishing = null;
+    propCtrl.floors = null;
     propCtrl.plotArea.clear();
     propCtrl.postedBy = "";
     propCtrl.postedFrom = "";
-
+    propCtrl.propertySaved.clear();
+    PropertyController.editMode = false;
+    PropertyController.propertyId = null;
     super.dispose();
   }
 }
