@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/controller/chatcontroller.dart';
 import 'package:real_estate_application/controller/indexcontroller.dart';
 import 'package:real_estate_application/view/all_properties/all_properties_page.dart';
 import 'package:real_estate_application/view/chat/chat_page.dart';
@@ -14,6 +15,7 @@ import 'package:real_estate_application/view/theme/theme_data.dart';
 class BottomNavBar extends StatelessWidget {
   BottomNavBar({super.key});
   var indexctrl = Get.put(IndexController());
+  var chatCtrl = Get.put(ChatController());
 
   List<Widget> pages = [
     HomePage(),
@@ -68,10 +70,16 @@ class BottomNavBar extends StatelessWidget {
                     label: "properties",
                   ),
                   BottomNavigationBarItem(
-                    icon: FaIcon(
-                      FontAwesomeIcons.comments,
-                      size: 20,
-                      color: AppThemeData.themeColor,
+                    icon: GestureDetector(
+                      onTap: () async {
+                        await chatCtrl.getUserProfile();
+                        indexctrl.index.value = 3;
+                      },
+                      child: FaIcon(
+                        FontAwesomeIcons.comments,
+                        size: 20,
+                        color: AppThemeData.themeColor,
+                      ),
                     ),
                     label: 'message',
                   ),

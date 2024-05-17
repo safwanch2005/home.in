@@ -143,10 +143,13 @@ class _AllPropertiesPageState extends State<AllPropertiesPage> {
 
                                     return GestureDetector(
                                       onTap: () {
-                                        Get.to(() => PropertiesDetailsPage(
-                                              propData: propData,
-                                              propId: prop.id,
-                                            ));
+                                        Get.to(
+                                            () => PropertiesDetailsPage(
+                                                  propData: propData,
+                                                  propId: prop.id,
+                                                ),
+                                            transition:
+                                                Transition.rightToLeftWithFade);
                                       },
                                       child: Container(
                                         margin: const EdgeInsets.symmetric(

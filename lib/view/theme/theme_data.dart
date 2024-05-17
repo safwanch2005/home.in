@@ -11,5 +11,6 @@ class AppThemeData {
   static Color red = Colors.red;
   static Color themeColor = Colors.lightBlue.shade400;
   static Color themeColorShade = Colors.lightBlue.shade200;
+  static Color themeColorShade1 = Colors.lightBlue.shade100;
   static Color background = Colors.white;
 }

@@ -88,9 +88,7 @@ class MyPropertiesPage extends StatelessWidget {
                         child: IntrinsicHeight(
                           child: Container(
                             margin: const EdgeInsets.all(5),
-                            // height: 500,
                             decoration: BoxDecoration(
-                                // border: Border.all(color: Colors.white54, width: 1),
                                 color: AppThemeData.background,
                                 boxShadow: [
                                   BoxShadow(
@@ -121,7 +119,7 @@ class MyPropertiesPage extends StatelessWidget {
                                       id: prop.id,
                                     ),
                                     DeleteMyProp(
-                                      id: propData['id'],
+                                      id: prop.id,
                                     ),
                                   ],
                                 ),

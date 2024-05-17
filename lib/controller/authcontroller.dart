@@ -29,6 +29,7 @@ class AuthController extends GetxController {
   var isEmailVerified = false.obs;
   RxString username = "".obs;
   Rx<bool> emailVerified = Rx<bool>(false);
+  String userId = "";
 
   //create account with email and password
   Future<User?> signUp({
@@ -38,19 +39,22 @@ class AuthController extends GetxController {
     required String confirmPassword,
     required BuildContext context,
   }) async {
+    loading.value = true;
+
     if (userName.isEmpty || userEmail.isEmpty) {
       Get.snackbar(
         "Error",
         "Please enter your name and email",
         snackPosition: SnackPosition.BOTTOM,
       );
+      loading.value = false;
       return null;
     }
     // Check if password and confirmPassword match
     if (password != confirmPassword) {
       Get.snackbar("Error", "Passwords do not match.",
           snackPosition: SnackPosition.BOTTOM);
-      //  loading.value = true;
+      loading.value = false;
       return null;
     } else if (password.isEmpty) {
       Get.snackbar(
@@ -58,14 +62,14 @@ class AuthController extends GetxController {
         "Please enter a password",
         snackPosition: SnackPosition.BOTTOM,
       );
-      //  loading.value = true;
+      loading.value = false;
       return null;
     }
 
     if (isAgree.value == false) {
       Get.snackbar("Error", "Please accept terms and conditions.",
           snackPosition: SnackPosition.BOTTOM);
-      //loading.value = true;
+      loading.value = false;
       return null;
     }
     try {
@@ -82,10 +86,15 @@ class AuthController extends GetxController {
         username.value = userName;
 
         await addUser(UserModel(
-            userName: userName, email: email.text, password: password));
+            userName: userName,
+            email: email.text,
+            password: password,
+            id: auth.currentUser!.uid));
+        loading.value = false;
         return user;
       }
     } on FirebaseAuthException catch (e) {
+      loading.value = false;
       if (e.code == 'weak-password') {
         Get.snackbar('Error', 'The password provided is too weak.',
             snackPosition: SnackPosition.BOTTOM);
@@ -95,9 +104,11 @@ class AuthController extends GetxController {
       }
       return null;
     } catch (e) {
+      loading.value = false;
       debugPrint(e.toString());
       return null;
     }
+    loading.value = false;
     return null;
   }
 
@@ -132,11 +143,7 @@ class AuthController extends GetxController {
 
   //add user to database
   addUser(UserModel user) async {
-    await db
-        .collection("users")
-        .doc(auth.currentUser?.uid)
-        .collection("profile")
-        .add(user.toMap());
+    await db.collection("users").add(user.toMap());
   }
 
   //Sign out
@@ -199,7 +206,22 @@ class AuthController extends GetxController {
           accessToken: googleSignInAuthentication.accessToken,
         );
 
-        await auth.signInWithCredential(credential);
+        UserCredential userCredential =
+            await auth.signInWithCredential(credential);
+        User? user = userCredential.user;
+
+        if (user != null) {
+          // Check if the user exists in Firestore
+          DocumentSnapshot userDoc =
+              await db.collection('users').doc(user.uid).get();
+
+          if (!userDoc.exists) {
+            // If user does not exist, create a new user in Firestore
+            await addUser(UserModel(
+                userName: user.displayName, email: user.email, id: user.uid));
+          }
+        }
+
         Get.offAll(() => BottomNavBar());
       }
     } catch (e) {
@@ -271,6 +293,7 @@ class AuthController extends GetxController {
                     'phoneNumber': newUser.phoneNumber,
                     'name': userName.text, // Add the user's name here
                     'createdAt': Timestamp.now(),
+                    'id': auth.currentUser!.uid,
                   });
                 }
               }
@@ -336,10 +359,13 @@ class AuthController extends GetxController {
     if (auth.currentUser!.displayName == null) {
       print("====================================");
       await auth.currentUser!.updateDisplayName(userName.text);
+      addUser(UserModel(
+        userName: userName.text,
+        email: phoneNumber.text,
+        id: auth.currentUser!.uid,
+      ));
       Get.snackbar("Success", "username has been saved",
           snackPosition: SnackPosition.BOTTOM);
-
-      print(auth.currentUser);
       Get.offAll(() => BottomNavBar());
     }
     //else {

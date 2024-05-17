@@ -158,10 +158,10 @@ class _FormPageState extends State<FormPage> {
                                   boxShadow: [
                                     BoxShadow(
                                       color: AppThemeData.themeColor
-                                          .withOpacity(0.5), // Shadow color
-                                      spreadRadius: 5, // Spread radius
-                                      blurRadius: 8, // Blur radius
-                                      offset: const Offset(0, 0), // Offset
+                                          .withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 0),
                                     ),
                                   ],
                                 ),

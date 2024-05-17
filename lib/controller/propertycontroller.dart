@@ -300,7 +300,7 @@ class PropertyController extends GetxController {
     }
 
     try {
-      dynamic updatedDetails;
+      Map<String, dynamic> updatedDetails;
       if (category == "Land") {
         if (plotArea.text == "" || length.text == "" || breadth.text == "") {
           Get.snackbar(
@@ -377,23 +377,18 @@ class PropertyController extends GetxController {
           'furnishing': furnishing,
           'constructionStatus': constructionStatus,
           'carParking': carParking,
-          'areaftsq': areaftsq,
+          'areaftsq': areaftsq.text,
           'floors': floors,
           'bedrooms': bedrooms,
           'bathrooms': bathrooms,
         };
       }
-      {
-        await db
-            .collection('properties')
-            .doc(propertyId)
-            .update(updatedDetails);
+      await db.collection('properties').doc(propertyId).update(updatedDetails);
+      Get.snackbar("Success", "Property details updated successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppThemeData.green);
+      Get.off(() => const MyPropertiesPage());
 
-        Get.snackbar("Success", "Property details updated successfully",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: AppThemeData.green);
-        Get.off(() => const MyPropertiesPage());
-      }
       editMode = false;
       PropertyController.propertyId = null;
     } catch (e) {
@@ -414,13 +409,3 @@ class PropertyController extends GetxController {
     }
   }
 }
-
-    // // print(property); //id
-    // final snapShot = await db.collection('properties').doc(property).get();
-    // final data = snapShot.data();
-    // print(data!['propertySaved']);
-
-    // print("-----------done-----------");
-    // Get.snackbar("Success", "Property Saved",
-    //     snackPosition: SnackPosition.BOTTOM,
-    //     backgroundColor: AppThemeData.green);

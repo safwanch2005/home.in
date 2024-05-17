@@ -32,8 +32,6 @@ class DescriptionField extends StatelessWidget {
             controller: ctrl.description,
             style: GoogleFonts.poppins(
                 fontSize: 20, color: AppThemeData.themeColor),
-
-            //controller: _textController,
             decoration: InputDecoration(
               filled: true,
               fillColor: AppThemeData.background,

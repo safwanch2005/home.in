@@ -9,6 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await firebaseInitialization;
   Get.config(enableLog: false);
+
   runApp(MyApp());
 }
 
