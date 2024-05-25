@@ -24,7 +24,7 @@ class ProfilePage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.05,
-          vertical: MediaQuery.of(context).size.height * 0.02,
+          vertical: MediaQuery.of(context).size.height * 0.04,
         ),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -39,8 +39,8 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 10),
             const Notifications(),
             const SizedBox(height: 10),
-            const SelectLanguage(),
-            const SizedBox(height: 10),
+            // const SelectLanguage(),
+            // const SizedBox(height: 10),
             const RateUs(),
             const SizedBox(height: 10),
             const AboutPage(),
@@ -50,7 +50,7 @@ class ProfilePage extends StatelessWidget {
             Text(
               "version 1.0.0",
               style: GoogleFonts.poppins(
-                  color: AppThemeData.themeColorShade, fontSize: 15),
+                  color: AppThemeData.themeColorShade, fontSize: 20),
             ),
           ],
         ),

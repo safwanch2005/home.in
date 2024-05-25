@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:real_estate_application/controller/chatcontroller.dart';
 import 'package:real_estate_application/firebase/firebase_constants.dart';
+import 'package:real_estate_application/view/chat/chatting_screen/chatting_screen.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/back_and_share_icon.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/count_of_items.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/description.dart';
@@ -20,10 +22,11 @@ import 'package:real_estate_application/view/theme/theme_data.dart';
 class PropertiesDetailsPage extends StatelessWidget {
   PropertiesDetailsPage(
       {super.key, required this.propData, required this.propId});
-  Map<String, dynamic> propData = {};
+  Map<String, dynamic> propData;
   dynamic propId;
   double initialX = 0.0;
   double finalX = 0.0;
+  final chatCtrl = Get.put(ChatController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,11 +37,19 @@ class PropertiesDetailsPage extends StatelessWidget {
         onHorizontalDragUpdate: (details) {
           finalX = details.localPosition.dx;
         },
-        onHorizontalDragEnd: (details) {
+        onHorizontalDragEnd: (details) async {
           if (finalX - initialX > 0) {
             Get.back();
           } else {
-            // while swiping from right to left
+            if (propData['userId'] != auth.currentUser!.uid) {
+              chatCtrl.friendId = propData["userId"];
+              chatCtrl.friendName = propData["postedBy"];
+              await chatCtrl.getChatId();
+              Get.to(
+                () => const ChattingScreen(),
+                transition: Transition.rightToLeft,
+              );
+            }
           }
         },
         child: Scaffold(
@@ -146,23 +157,17 @@ class PropertiesDetailsPage extends StatelessWidget {
                             ),
                           ),
                           propData["category"] == "Land"
-                              ? LandDetailsContainer(
-                                  propData: propData,
-                                )
-                              : DetailsContainerHouseApart(
-                                  propData: propData,
-                                ),
+                              ? LandDetailsContainer(propData: propData)
+                              : DetailsContainerHouseApart(propData: propData),
                           DescriptionPageDetailPage(
-                            description: propData['description'],
-                          ),
+                              description: propData['description']),
                           UserProfileDetailsPage(propData: propData),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           SaveAndMessageButton(
                             propId: propId,
                             isSaved: propData['propertySaved']
                                 .contains(auth.currentUser!.uid),
+                            propData: propData,
                           ),
                         ],
                       ),

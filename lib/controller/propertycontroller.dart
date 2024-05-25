@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:real_estate_application/controller/indexcontroller.dart';
 import 'package:real_estate_application/model/properties_land_model.dart';
 import 'package:real_estate_application/model/properties_house_apartment_model.dart';
+import 'package:real_estate_application/view/bottom_nav/bottom_navbar.dart';
 import 'package:real_estate_application/view/custom_widget/snackbar/error.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/my_properties/my_properties_page.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/select_category.dart';
@@ -50,6 +52,33 @@ class PropertyController extends GetxController {
   static dynamic dataForEdit;
   final searchData = "".obs;
   final isPropertySaved = false.obs;
+  final indexCtrl = Get.put(IndexController());
+  ///// data for filter
+  String? categoryFilter;
+  String? typeFilter;
+  String? constructionStatusFilter;
+  String? listedByFilter;
+  String? floorsFilter;
+  String? bedFilter;
+  String? bathFilter;
+  String? furnishingFilter;
+  bool? lowToHighPriceFilter;
+  int? startingRange;
+  int? endingRange;
+
+  getAllProperties() {
+    return db
+        .collection("properties")
+        .where("category", isEqualTo: categoryFilter)
+        .where("type", isEqualTo: typeFilter)
+        .where('constructionStatus', isEqualTo: constructionStatusFilter)
+        .where('listedBy', isEqualTo: listedByFilter)
+        .where('floors', isEqualTo: floorsFilter)
+        .where('bedrooms', isEqualTo: bedFilter)
+        .where('bathrooms', isEqualTo: bathFilter)
+        .where('furnishing', isEqualTo: furnishingFilter)
+        .snapshots();
+  }
 
   addPropertyDetails({
     required String category,
@@ -140,8 +169,8 @@ class PropertyController extends GetxController {
       Get.snackbar("Success", "property added successfully",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: AppThemeData.green);
-
-      Get.off(() => SellPropSelectCategory());
+      indexCtrl.index.value = 2;
+      Get.offAll(BottomNavBar());
     } else if (category == 'Land') {
       if (plotArea == "" || length == "" || breadth == "") {
         Get.snackbar(
@@ -184,7 +213,9 @@ class PropertyController extends GetxController {
       Get.snackbar("Success", "property added successfully",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: AppThemeData.green);
-      Get.off(() => SellPropSelectCategory());
+
+      indexCtrl.index.value = 2;
+      Get.offAll(BottomNavBar());
     } else {
       Get.snackbar("error", "select category",
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);

@@ -6,6 +6,7 @@ import 'package:real_estate_application/controller/chatcontroller.dart';
 import 'package:real_estate_application/controller/indexcontroller.dart';
 import 'package:real_estate_application/view/all_properties/all_properties_page.dart';
 import 'package:real_estate_application/view/chat/chat_page.dart';
+import 'package:real_estate_application/view/chat/chatting_screen/components/message_field.dart';
 import 'package:real_estate_application/view/home/home_page.dart';
 import 'package:real_estate_application/view/location/location_page.dart';
 import 'package:real_estate_application/view/profile/profile.dart';
@@ -15,7 +16,6 @@ import 'package:real_estate_application/view/theme/theme_data.dart';
 class BottomNavBar extends StatelessWidget {
   BottomNavBar({super.key});
   var indexctrl = Get.put(IndexController());
-  var chatCtrl = Get.put(ChatController());
 
   List<Widget> pages = [
     HomePage(),
@@ -72,7 +72,7 @@ class BottomNavBar extends StatelessWidget {
                   BottomNavigationBarItem(
                     icon: GestureDetector(
                       onTap: () async {
-                        await chatCtrl.getUserProfile();
+                        // await chatCtrl.getUserProfile();
                         indexctrl.index.value = 3;
                       },
                       child: FaIcon(

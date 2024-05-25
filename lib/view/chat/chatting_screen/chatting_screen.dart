@@ -1,23 +1,32 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:real_estate_application/controller/chatcontroller.dart';
 import 'package:real_estate_application/view/chat/chatting_screen/components/appbar.dart';
-import 'package:real_estate_application/view/chat/chatting_screen/components/msg_widget.dart';
-import 'package:real_estate_application/view/chat/chatting_screen/send_msg_options.dart';
+import 'package:real_estate_application/view/chat/chatting_screen/components/chat_bubble.dart';
+import 'package:real_estate_application/view/theme/theme_data.dart';
 
-class ChattingScreen extends StatelessWidget {
+class ChattingScreen extends StatefulWidget {
   const ChattingScreen({super.key});
+
+  @override
+  State<ChattingScreen> createState() => _ChattingScreenState();
+}
+
+class _ChattingScreenState extends State<ChattingScreen> {
+  final chatCtrl = Get.put(ChatController());
+
+  @override
+  dispose() {
+    super.dispose();
+    chatCtrl.friendId = '';
+    chatCtrl.friendName = '';
+  }
 
   @override
   Widget build(BuildContext context) {
     double initialX = 0.0;
     double finalX = 0.0;
-    final ScrollController scrollController = ScrollController();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
-    });
+    // chatCtrl.getChatId();
     return SafeArea(
       child: GestureDetector(
         onHorizontalDragStart: (details) {
@@ -34,14 +43,16 @@ class ChattingScreen extends StatelessWidget {
           }
         },
         child: Scaffold(
-          appBar: appbar(),
-          body: Stack(
-            children: [
-              MessageWidget(scrollController: scrollController),
-              const Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SendMessageOptions()),
-            ],
+          appBar: appbar(chatCtrl.friendName ?? ''),
+          body: SingleChildScrollView(
+            child: Obx(
+              () => chatCtrl.isLoading.value
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      color: AppThemeData.themeColor,
+                    ))
+                  : ChatBubble(),
+            ),
           ),
         ),
       ),

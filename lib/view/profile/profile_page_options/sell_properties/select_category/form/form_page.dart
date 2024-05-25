@@ -184,7 +184,7 @@ class _FormPageState extends State<FormPage> {
                                               title: propCtrl.title.text,
                                               description:
                                                   propCtrl.description.text,
-                                              price: propCtrl.price.text,
+                                              price: propCtrl.price.text.trim(),
                                               location: propCtrl.location,
                                               imageUrls: propCtrl.imageUrls,
                                               listedBy: propCtrl.listedBy,

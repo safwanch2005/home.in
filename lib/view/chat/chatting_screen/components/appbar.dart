@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
-AppBar appbar() {
+AppBar appbar(String friendName) {
   return AppBar(
     shape: Border(
       bottom: BorderSide(color: AppThemeData.themeColorShade, width: 1),
@@ -22,7 +22,7 @@ AppBar appbar() {
           width: 15,
         ),
         Text(
-          'User name',
+          friendName,
           style: GoogleFonts.poppins(fontSize: 30),
         ),
       ],

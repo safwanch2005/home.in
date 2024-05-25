@@ -51,6 +51,8 @@ dependencies:
   image_cropper: ^6.0.0
   permission_handler: ^11.3.1
   another_carousel_pro: ^1.0.2
+  liquid_pull_to_refresh: ^3.0.1
+  firebase_messaging: ^14.9.3
   
 
 dev_dependencies:

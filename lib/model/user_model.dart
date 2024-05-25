@@ -1,6 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:real_estate_application/firebase/firebase_constants.dart';
-
 class UserModel {
   String? id, userName, email, password;
   UserModel({this.email, this.id, this.userName, this.password});
