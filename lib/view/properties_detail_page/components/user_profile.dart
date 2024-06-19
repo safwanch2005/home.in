@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_application/controller/authcontroller.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
 // ignore: must_be_immutable
-class UserProfileDetailsPage extends StatelessWidget {
+class UserProfileDetailsPage extends StatefulWidget {
   UserProfileDetailsPage({super.key, required this.propData});
   dynamic propData;
+
+  @override
+  State<UserProfileDetailsPage> createState() => _UserProfileDetailsPageState();
+}
+
+class _UserProfileDetailsPageState extends State<UserProfileDetailsPage> {
+  final authCtrl = Get.put(AuthController());
+
+  List data = ['', null];
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
+  getUserData() async {
+    data = await authCtrl.getUserDetailsByUId(widget.propData["userId"]);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print(propData);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -56,19 +79,21 @@ class UserProfileDetailsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.black12,
-                  backgroundImage: AssetImage(
-                    "assets/profile.jpeg",
-                  ),
+                  backgroundImage: data[1] == null
+                      ? const AssetImage(
+                          "assets/profile.jpeg",
+                        ) as ImageProvider
+                      : NetworkImage(data[1].toString()),
                 ),
               ),
               const SizedBox(
                 width: 20,
               ),
               Text(
-                propData["postedBy"],
+                data[0] ?? '',
                 style: GoogleFonts.poppins(
                     fontSize: 30, color: AppThemeData.themeColor),
               ),

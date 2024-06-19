@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:real_estate_application/controller/indexcontroller.dart';
 import 'package:real_estate_application/controller/propertycontroller.dart';
 import 'package:real_estate_application/firebase/firebase_constants.dart';
 import 'package:real_estate_application/view/all_properties/components/area_ft.dart';
@@ -35,6 +36,7 @@ class _AllPropertiesPageState extends State<AllPropertiesPage> {
   }
 
   final ctrl = Get.put(PropertyController());
+  final indexCtrl = Get.put(IndexController());
 
   Future<void> onRefresh() async {
     setState(() {});
@@ -64,6 +66,7 @@ class _AllPropertiesPageState extends State<AllPropertiesPage> {
               ],
             ),
             child: TextFormField(
+              autofocus: indexCtrl.fromHomeTextField,
               style: GoogleFonts.poppins(color: AppThemeData.themeColor),
               textAlign: TextAlign.center,
               onChanged: (value) {
@@ -192,6 +195,7 @@ class _AllPropertiesPageState extends State<AllPropertiesPage> {
                                           child: Column(
                                             children: [
                                               ImageAllProp(
+                                                isSold: propData['isSold'],
                                                 imgUrl:
                                                     propData["imageUrls"].first,
                                               ),

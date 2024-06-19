@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:real_estate_application/controller/chatcontroller.dart';
+import 'package:real_estate_application/controller/chat_controller.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
-Row messageField(BuildContext context) {
+Row messageField(BuildContext context, String friendID, String? friendToken) {
   final chatCtrl = Get.put(ChatController());
 
   return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          margin: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.01,
+              vertical: 5),
           height: MediaQuery.of(context).size.height * 0.05,
-          width: MediaQuery.of(context).size.width * 0.85,
+          width: MediaQuery.of(context).size.width * 0.8,
           decoration: BoxDecoration(
             color: AppThemeData.background,
           ),
@@ -25,7 +28,7 @@ Row messageField(BuildContext context) {
               prefix: const SizedBox(width: 10),
               suffixIcon: GestureDetector(
                   onTap: () async {
-                    await chatCtrl.pickAndUploadImage();
+                    await chatCtrl.pickAndUploadImage(friendID);
                   },
                   child: const Icon(Icons.attachment_outlined)),
               suffixIconColor: AppThemeData.themeColor,
@@ -39,21 +42,21 @@ Row messageField(BuildContext context) {
               contentPadding: const EdgeInsets.symmetric(horizontal: 15),
             ),
           )),
-      GestureDetector(
-        onTap: () {},
-        child: CircleAvatar(
-          radius: 25,
-          backgroundColor: AppThemeData.themeColor,
-          child: Center(
-            child: IconButton(
-              onPressed: () async {
-                await chatCtrl.sentMessage(chatCtrl.messageController.text);
-              },
-              icon: Icon(
-                Icons.send,
-                size: 25,
-                color: AppThemeData.background,
-              ),
+      // const Spacer(),
+      CircleAvatar(
+        radius: 25,
+        backgroundColor: AppThemeData.themeColor,
+        child: Center(
+          child: IconButton(
+            onPressed: () async {
+              chatCtrl.getChats(friendID);
+              await chatCtrl.sentMessage(
+                  chatCtrl.messageController.text, friendID, friendToken);
+            },
+            icon: Icon(
+              Icons.send,
+              size: 25,
+              color: AppThemeData.background,
             ),
           ),
         ),

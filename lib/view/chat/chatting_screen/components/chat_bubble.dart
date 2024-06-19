@@ -4,53 +4,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:real_estate_application/controller/chatcontroller.dart';
+import 'package:real_estate_application/controller/chat_controller.dart';
 import 'package:real_estate_application/firebase/firebase_constants.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'message_field.dart';
 
+// ignore: must_be_immutable
 class ChatBubble extends StatelessWidget {
-  ChatBubble({super.key});
+  ChatBubble({super.key, required this.friendID, required this.friendToken});
   final chatCtrl = Get.put(ChatController());
-
+  String friendID;
+  String? friendToken;
   @override
   Widget build(BuildContext context) {
-    // chatCtrl.getChatId();
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           color: AppThemeData.background,
-          margin:
-              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
+          margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.01,
+              left: 5,
+              right: 5),
           height: MediaQuery.of(context).size.height * 0.81,
-          child: StreamBuilder(
-              stream: chatCtrl.getChats(),
+          child: StreamBuilder<QuerySnapshot>(
+              stream: chatCtrl.getChats(friendID),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return Container();
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Center(
+                      child: Text(
+                    "Start a new\nconversation",
+                    style: GoogleFonts.poppins(
+                      fontSize: 50,
+                      color: AppThemeData.themeColorShade1,
+                    ),
+                  ));
                 }
                 return ListView(
                   reverse: true,
                   physics: const BouncingScrollPhysics(),
-                  children: snapshot.data!.docs.asMap().entries.map((entry) {
-                    var document = entry.value;
-                    var t = document['created_on'] == null
+                  children: snapshot.data!.docs.map((document) {
+                    var data = document.data() as Map<String, dynamic>;
+                    var t = data['created_on'] == null
                         ? DateTime.now()
-                        : document['created_on'].toDate();
+                        : data['created_on'].toDate();
                     var time = intl.DateFormat("h:mma").format(t);
                     return Column(
                       crossAxisAlignment:
-                          document['uid'] == auth.currentUser!.uid
+                          data['fromId'] == auth.currentUser!.uid
                               ? CrossAxisAlignment.end
                               : CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment:
-                              document['uid'] == auth.currentUser!.uid
+                              data['fromId'] == auth.currentUser!.uid
                                   ? MainAxisAlignment.end
                                   : MainAxisAlignment.start,
                           children: [
@@ -60,10 +69,10 @@ class ChatBubble extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(
                                   vertical: 3, horizontal: 10),
                               decoration: BoxDecoration(
-                                  color:
-                                      document['uid'] == auth.currentUser!.uid
-                                          ? AppThemeData.themeColor
-                                          : AppThemeData.background,
+                                  color: document['fromId'] ==
+                                          auth.currentUser!.uid
+                                      ? AppThemeData.themeColor
+                                      : AppThemeData.background,
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                       color: AppThemeData.themeColor,
@@ -79,7 +88,7 @@ class ChatBubble extends StatelessWidget {
                                         document['msg'],
                                         style: GoogleFonts.poppins(
                                             fontSize: 18,
-                                            color: document['uid'] ==
+                                            color: document['fromId'] ==
                                                     auth.currentUser!.uid
                                                 ? AppThemeData.background
                                                 : AppThemeData.themeColor),
@@ -91,7 +100,7 @@ class ChatBubble extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal:
-                                  MediaQuery.of(context).size.width * 0.07),
+                                  MediaQuery.of(context).size.width * 0.05),
                           child: Text(
                             time,
                             style: GoogleFonts.poppins(
@@ -105,7 +114,7 @@ class ChatBubble extends StatelessWidget {
                 );
               }),
         ),
-        messageField(context)
+        messageField(context, friendID, friendToken)
       ],
     );
   }

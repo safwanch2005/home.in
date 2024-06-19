@@ -13,7 +13,7 @@ class MyProperties extends StatelessWidget {
       onTap: () => Get.to(() => const MyPropertiesPage()),
       child: ProfileCustomBotton(
         icon: FontAwesomeIcons.buildingUser,
-        text: "My properties",
+        text: "My properties and requests",
       ),
     );
   }

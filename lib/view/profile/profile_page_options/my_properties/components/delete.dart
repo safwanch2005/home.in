@@ -14,7 +14,8 @@ class DeleteMyProp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 30,
+        height: MediaQuery.of(context).size.height * 0.04,
+        width: MediaQuery.of(context).size.width * 0.4,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
           onPressed: () async {

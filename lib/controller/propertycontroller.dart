@@ -11,9 +11,8 @@ import 'package:real_estate_application/model/properties_land_model.dart';
 import 'package:real_estate_application/model/properties_house_apartment_model.dart';
 import 'package:real_estate_application/view/bottom_nav/bottom_navbar.dart';
 import 'package:real_estate_application/view/custom_widget/snackbar/error.dart';
+import 'package:real_estate_application/view/custom_widget/snackbar/success.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/my_properties/my_properties_page.dart';
-import 'package:real_estate_application/view/profile/profile_page_options/sell_properties/select_category/select_category.dart';
-import 'package:real_estate_application/view/theme/theme_data.dart';
 
 class PropertyController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -69,6 +68,8 @@ class PropertyController extends GetxController {
   getAllProperties() {
     return db
         .collection("properties")
+        .where('hide', isEqualTo: false)
+        .where('isAccepted', isEqualTo: 2)
         .where("category", isEqualTo: categoryFilter)
         .where("type", isEqualTo: typeFilter)
         .where('constructionStatus', isEqualTo: constructionStatusFilter)
@@ -77,6 +78,15 @@ class PropertyController extends GetxController {
         .where('bedrooms', isEqualTo: bedFilter)
         .where('bathrooms', isEqualTo: bathFilter)
         .where('furnishing', isEqualTo: furnishingFilter)
+        .snapshots();
+  }
+
+  getRecentProperties() {
+    return db
+        .collection("properties")
+        .where('hide', isEqualTo: false)
+        .where('isAccepted', isEqualTo: 2)
+        .orderBy('timestamp', descending: true)
         .snapshots();
   }
 
@@ -113,7 +123,7 @@ class PropertyController extends GetxController {
         location['country'] == "" ||
         location["state"] == "null" ||
         location["city"] == "null") {
-      successSnackBar("Error", "fill all fields");
+      errorSnackBar("Error", "fill all fields");
       return;
     }
 
@@ -125,11 +135,9 @@ class PropertyController extends GetxController {
           bathrooms == null ||
           floors == null ||
           areaftsq == "") {
-        Get.snackbar(
+        errorSnackBar(
           "Error",
           "fill all fields",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
         );
         return;
       }
@@ -152,85 +160,70 @@ class PropertyController extends GetxController {
         areaftsq: areaftsq,
         floors: floors,
         postedBy: postedBy,
+        userImg: null,
         postedFrom: postedFrom,
         category: category,
         propertySaved: propertySaved,
+        hide: false,
+        isAccepted: 0,
+        isSold: true,
       );
       if (imageUrls.length < 4) {
-        Get.snackbar(
-          "Error",
-          "Minimum 4 images required",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-        );
+        errorSnackBar("Error", "Minimum 4 images required");
         return;
       }
       db.collection('properties').add(property.toMap());
-      Get.snackbar("Success", "property added successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppThemeData.green);
+      successSnackbar("Success", "Request  has been sent successfully!");
       indexCtrl.index.value = 2;
       Get.offAll(BottomNavBar());
     } else if (category == 'Land') {
       if (plotArea == "" || length == "" || breadth == "") {
-        Get.snackbar(
-          "Error",
-          "fill all fields",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-        );
+        errorSnackBar("Error", "fill all fields");
         return;
       }
       if (imageUrls.length < 4) {
-        Get.snackbar(
-          "Error",
-          "Minimum 4 images required",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-        );
+        errorSnackBar("Error", "Minimum 4 images required");
         return;
       }
       PropertyLandModel property = PropertyLandModel(
-          id: db.collection('properties').doc().id,
-          userId: auth.currentUser!.uid,
-          type: type,
-          title: title,
-          description: description,
-          price: price,
-          location: location,
-          imageUrls: imageUrls,
-          listedBy: listedBy,
-          facingDirection: facingDirection,
-          length: length,
-          breadth: breadth,
-          plotArea: plotArea,
-          postedBy: postedBy,
-          postedFrom: postedFrom,
-          category: category,
-          propertySaved: propertySaved);
+        id: db.collection('properties').doc().id,
+        userId: auth.currentUser!.uid,
+        type: type,
+        title: title,
+        description: description,
+        price: price,
+        location: location,
+        imageUrls: imageUrls,
+        listedBy: listedBy,
+        facingDirection: facingDirection,
+        length: length,
+        breadth: breadth,
+        userImg: null,
+        plotArea: plotArea,
+        postedBy: postedBy,
+        postedFrom: postedFrom,
+        category: category,
+        propertySaved: propertySaved,
+        hide: false,
+        isAccepted: 0,
+        isSold: true,
+      );
 
       db.collection('properties').add(property.toMap());
-      Get.snackbar("Success", "property added successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppThemeData.green);
-
+      successSnackbar("Success", "Request  has been sent successfully!");
       indexCtrl.index.value = 2;
       Get.offAll(BottomNavBar());
     } else {
-      Get.snackbar("error", "select category",
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+      errorSnackBar("error", "select category");
     }
   }
 
   deleteProperty(String propertyId) async {
     try {
       await db.collection('properties').doc(propertyId).delete();
-      Get.snackbar("Success", "Property deleted successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppThemeData.green);
+      successSnackbar("Success", "Property deleted successfully");
     } catch (e) {
-      Get.snackbar("Error", "Failed to delete property: $e",
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+      errorSnackBar("Error", "Failed to delete property: $e");
     }
   }
 
@@ -245,12 +238,10 @@ class PropertyController extends GetxController {
       final fileUrl = await result.ref.getDownloadURL();
       imageUrls.add(fileUrl);
       isLoading.value = false;
-      Get.snackbar("Success", 'Image ${imageUrls.length} successfully saved',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppThemeData.green);
+      successSnackbar(
+          "Success", 'Image ${imageUrls.length} successfully saved');
     } catch (e) {
-      Get.snackbar("error", 'Error in uploading image $e',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+      errorSnackBar("error", 'Error in uploading image $e');
     }
   }
 
@@ -258,20 +249,18 @@ class PropertyController extends GetxController {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!serviceEnabled) {
-      Get.snackbar("Error", "Location service is not enabled",
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+      errorSnackBar("Error", "Location service is not enabled");
     }
+
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        Get.snackbar("Error", "Location permission denied",
-            snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+        errorSnackBar("Error", "Location permission denied");
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      Get.snackbar("Error", "Location permissions are permanently denied",
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+      errorSnackBar("Error", "Location permissions are permanently denied");
     }
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
@@ -325,8 +314,7 @@ class PropertyController extends GetxController {
         location['country'] == "" ||
         location["state"] == "null" ||
         location["city"] == "null") {
-      successSnackBar("Error", "fill all fields");
-
+      errorSnackBar("Error", "fill all fields");
       return;
     }
 
@@ -334,21 +322,11 @@ class PropertyController extends GetxController {
       Map<String, dynamic> updatedDetails;
       if (category == "Land") {
         if (plotArea.text == "" || length.text == "" || breadth.text == "") {
-          Get.snackbar(
-            "Error",
-            "fill all fields",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-          );
+          errorSnackBar("Error", "fill all fields");
           return;
         }
         if (imageUrls.length < 4) {
-          Get.snackbar(
-            "Error",
-            "Minimum 4 images required",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-          );
+          errorSnackBar("Error", "Minimum 4 images required");
           return;
         }
         updatedDetails = {
@@ -375,22 +353,12 @@ class PropertyController extends GetxController {
             bathrooms == null ||
             floors == null ||
             areaftsq.text == "") {
-          Get.snackbar(
-            "Error",
-            "fill all fields",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-          );
+          errorSnackBar("Error", "fill all fields");
           return;
         }
 
         if (imageUrls.length < 4) {
-          Get.snackbar(
-            "Error",
-            "Minimum 4 images required",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-          );
+          errorSnackBar("Error", "Minimum 4 images required");
           return;
         }
         updatedDetails = {
@@ -415,16 +383,13 @@ class PropertyController extends GetxController {
         };
       }
       await db.collection('properties').doc(propertyId).update(updatedDetails);
-      Get.snackbar("Success", "Property details updated successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppThemeData.green);
+      successSnackbar("Success", "Property details updated successfully");
       Get.off(() => const MyPropertiesPage());
 
       editMode = false;
       PropertyController.propertyId = null;
     } catch (e) {
-      Get.snackbar("Error", "Failed to update property details: $e",
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+      errorSnackBar("Error", "Failed to update property details: $e");
     }
   }
 
@@ -438,5 +403,11 @@ class PropertyController extends GetxController {
         'propertySaved': FieldValue.arrayRemove([auth.currentUser!.uid])
       });
     }
+  }
+
+  setSoldorNot(String propId, bool isSold) async {
+    await db.collection('properties').doc(propId).update({
+      'isSold': isSold,
+    });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:real_estate_application/controller/chatcontroller.dart';
+import 'package:real_estate_application/controller/authcontroller.dart';
+import 'package:real_estate_application/controller/chat_controller.dart';
 import 'package:real_estate_application/firebase/firebase_constants.dart';
 import 'package:real_estate_application/view/chat/chatting_screen/chatting_screen.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/back_and_share_icon.dart';
@@ -10,7 +11,6 @@ import 'package:real_estate_application/view/properties_detail_page/components/d
 import 'package:real_estate_application/view/properties_detail_page/components/land_details_container.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/land_length_breadth.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/location_text.dart';
-import 'package:real_estate_application/view/properties_detail_page/components/posted_time.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/price.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/property_image.dart';
 import 'package:real_estate_application/view/properties_detail_page/components/save_and_message_button/save_and_message_button.dart';
@@ -27,6 +27,8 @@ class PropertiesDetailsPage extends StatelessWidget {
   double initialX = 0.0;
   double finalX = 0.0;
   final chatCtrl = Get.put(ChatController());
+  final authCtrl = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,15 +43,16 @@ class PropertiesDetailsPage extends StatelessWidget {
           if (finalX - initialX > 0) {
             Get.back();
           } else {
-            if (propData['userId'] != auth.currentUser!.uid) {
-              chatCtrl.friendId = propData["userId"];
-              chatCtrl.friendName = propData["postedBy"];
-              await chatCtrl.getChatId();
-              Get.to(
-                () => const ChattingScreen(),
-                transition: Transition.rightToLeft,
-              );
-            }
+            await chatCtrl.getOrCreateChat(
+                auth.currentUser!.uid, propData['userId']);
+            final data = await authCtrl.getUserDetailsByUId(propData['userId']);
+            Get.to(
+              () => ChattingScreen(
+                friendId: propData["userId"],
+                friendToken: data[3],
+              ),
+              transition: Transition.rightToLeft,
+            );
           }
         },
         child: Scaffold(
@@ -89,7 +92,7 @@ class PropertiesDetailsPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               PriceDetailPage(price: propData['price']),
-                              const PostedTime(),
+                              //const PostedTime(),
                             ],
                           ),
                           TitleDetailPage(title: propData['title']),

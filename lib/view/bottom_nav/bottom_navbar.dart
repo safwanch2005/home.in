@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:real_estate_application/controller/chatcontroller.dart';
 import 'package:real_estate_application/controller/indexcontroller.dart';
 import 'package:real_estate_application/view/all_properties/all_properties_page.dart';
 import 'package:real_estate_application/view/chat/chat_page.dart';
-import 'package:real_estate_application/view/chat/chatting_screen/components/message_field.dart';
 import 'package:real_estate_application/view/home/home_page.dart';
 import 'package:real_estate_application/view/location/location_page.dart';
 import 'package:real_estate_application/view/profile/profile.dart';
@@ -18,11 +16,11 @@ class BottomNavBar extends StatelessWidget {
   var indexctrl = Get.put(IndexController());
 
   List<Widget> pages = [
-    HomePage(),
+    const HomePage(),
     const LocationPage(),
     const AllPropertiesPage(),
     const ChatPage(),
-    ProfilePage()
+    const ProfilePage()
   ];
 
   @override
@@ -94,6 +92,8 @@ class BottomNavBar extends StatelessWidget {
                 ],
                 onTap: (values) {
                   indexctrl.index.value = values;
+
+                  indexctrl.fromHomeTextField = false;
                 },
               ),
             ),

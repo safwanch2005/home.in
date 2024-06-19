@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:real_estate_application/controller/chatcontroller.dart';
+import 'package:real_estate_application/controller/authcontroller.dart';
+import 'package:real_estate_application/controller/chat_controller.dart';
 import 'package:real_estate_application/view/chat/chatting_screen/components/appbar.dart';
 import 'package:real_estate_application/view/chat/chatting_screen/components/chat_bubble.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
+// ignore: must_be_immutable
 class ChattingScreen extends StatefulWidget {
-  const ChattingScreen({super.key});
-
+  ChattingScreen(
+      {super.key, required this.friendId, required this.friendToken});
+  String friendId;
+  String? friendToken;
   @override
   State<ChattingScreen> createState() => _ChattingScreenState();
 }
 
 class _ChattingScreenState extends State<ChattingScreen> {
   final chatCtrl = Get.put(ChatController());
-
+  final authCtrl = Get.put(AuthController());
+  List data = ['', null, '', ''];
   @override
-  dispose() {
-    super.dispose();
-    chatCtrl.friendId = '';
-    chatCtrl.friendName = '';
+  void initState() {
+    fetchUserData();
+    super.initState();
+  }
+
+  fetchUserData() async {
+    data = await authCtrl.getUserDetailsByUId(widget.friendId);
+    appbar(data);
+    setState(() {});
   }
 
   @override
@@ -43,7 +53,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
           }
         },
         child: Scaffold(
-          appBar: appbar(chatCtrl.friendName ?? ''),
+          appBar: appbar(data),
           body: SingleChildScrollView(
             child: Obx(
               () => chatCtrl.isLoading.value
@@ -51,7 +61,10 @@ class _ChattingScreenState extends State<ChattingScreen> {
                       child: CircularProgressIndicator(
                       color: AppThemeData.themeColor,
                     ))
-                  : ChatBubble(),
+                  : ChatBubble(
+                      friendID: widget.friendId,
+                      friendToken: widget.friendToken,
+                    ),
             ),
           ),
         ),

@@ -28,12 +28,14 @@ class ProfileDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 70,
-                backgroundColor: Colors.black12,
-                backgroundImage: AssetImage(
-                  "assets/profile.jpeg",
-                ),
+                backgroundColor: AppThemeData.themeColor,
+                backgroundImage: ctrl.imgUrl == null
+                    ? const AssetImage(
+                        "assets/profile.jpeg",
+                      ) as ImageProvider
+                    : NetworkImage(ctrl.imgUrl!),
               ),
             ),
             Column(

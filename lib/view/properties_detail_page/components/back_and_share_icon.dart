@@ -26,15 +26,16 @@ class BackAndShareIcon extends StatelessWidget {
               ),
             ),
           ),
-          CircleAvatar(
-            backgroundColor: Colors.black26,
-            radius: 23,
-            child: Icon(
-              Icons.share,
-              size: 25,
-              color: AppThemeData.themeColor,
-            ),
-          ),
+          // CircleAvatar(
+          //   backgroundColor: Colors.black26,
+          //   radius: 23,
+          //   child: Icon(
+          //     Icons.share,
+          //     size: 25,
+          //     color: AppThemeData.themeColor,
+          //   ),
+          // ),
+          const SizedBox()
         ],
       ),
     );

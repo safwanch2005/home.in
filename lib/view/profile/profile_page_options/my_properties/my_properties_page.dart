@@ -4,10 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/firebase/firebase_constants.dart';
+import 'package:real_estate_application/view/all_properties/components/category_text.dart';
+import 'package:real_estate_application/view/all_properties/components/title.dart';
+import 'package:real_estate_application/view/profile/profile_page_options/my_properties/components/admin_response.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/my_properties/components/delete.dart';
 import 'package:real_estate_application/view/profile/profile_page_options/my_properties/components/edit.dart';
-import 'package:real_estate_application/view/profile/profile_page_options/my_properties/components/image.dart';
-import 'package:real_estate_application/view/profile/profile_page_options/my_properties/components/tittle.dart';
+import 'package:real_estate_application/view/profile/profile_page_options/my_properties/components/prop_image.dart';
+import 'package:real_estate_application/view/profile/profile_page_options/my_properties/components/prop_sold.dart';
 import 'package:real_estate_application/view/properties_detail_page/properties_detail_page.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
@@ -66,69 +69,94 @@ class MyPropertiesPage extends StatelessWidget {
                       ],
                     ),
                   )
-                : GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                    ),
-                    itemCount: propertiesDocs.length,
-                    itemBuilder: (context, index) {
-                      final prop = propertiesDocs[index];
-                      final propData = prop.data() as Map<String, dynamic>;
+                : Expanded(
+                    child: ListView.builder(
+                        itemCount: propertiesDocs.length,
+                        itemBuilder: (context, index) {
+                          final prop = propertiesDocs[index];
+                          final propData = prop.data() as Map<String, dynamic>;
 
-                      return GestureDetector(
-                        onTap: () {
-                          Get.to(() => PropertiesDetailsPage(
-                                propData: propData,
-                                propId: prop.id,
-                              ));
-                        },
-                        child: IntrinsicHeight(
-                          child: Container(
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                  () => PropertiesDetailsPage(
+                                        propData: propData,
+                                        propId: prop.id,
+                                      ),
+                                  transition: Transition.rightToLeftWithFade);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              decoration: BoxDecoration(
                                 color: AppThemeData.background,
+                                border: Border.all(
+                                    color: AppThemeData.themeColor, width: 2),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(25)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: AppThemeData.themeColor
-                                        .withOpacity(0.5), // Shadow color
-                                    spreadRadius: 5, // Spread radius
-                                    blurRadius: 7, // Blur radius
-                                    offset: const Offset(0, 3), // Offset
+                                        .withOpacity(0.5),
+                                    spreadRadius: 3,
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(15))),
-                            child: Column(
-                              children: [
-                                PropImageMyProp(
-                                  imgUrl: propData["imageUrls"].first,
-                                ),
-                                TittleMyProp(title: propData['title']),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    EditMyProp(
-                                      id: prop.id,
+                              ),
+                              child: Column(
+                                children: [
+                                  MyPropImage(
+                                    imgUrl: propData["imageUrls"].first,
+                                    isSold: propData['isSold'],
+                                  ),
+                                  CategoryText(
+                                    category: propData['category'],
+                                    type: propData['type'],
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: TitleAllProp(
+                                        title: propData["title"],
+                                      ),
                                     ),
-                                    DeleteMyProp(
-                                      id: prop.id,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      EditMyProp(
+                                        id: prop.id,
+                                      ),
+                                      DeleteMyProp(
+                                        id: prop.id,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  PropSold(
+                                    propId: prop.id,
+                                    isSold: propData['isSold'],
+                                  ),
+                                  AdminResponeStatus(
+                                    isAccepted: propData['isAccepted'],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    });
+                          );
+                        }),
+                  );
           }),
     );
   }

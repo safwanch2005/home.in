@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:real_estate_application/controller/indexcontroller.dart';
+import 'package:real_estate_application/controller/propertycontroller.dart';
 import 'package:real_estate_application/view/home/home_properties_category/saved/saved_property_page.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
@@ -9,6 +11,9 @@ class CustomBoxButton extends StatelessWidget {
   CustomBoxButton({super.key, required this.text, required this.icon});
   String text;
   dynamic icon;
+  var indexctrl = Get.put(IndexController());
+  final propCtrl = Get.put(PropertyController());
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -16,10 +21,22 @@ class CustomBoxButton extends StatelessWidget {
         if (text == 'Saved') {
           Get.to(() => const SavedPropertyPage());
         }
+        if (text == 'Lands') {
+          propCtrl.categoryFilter = "Lands";
+          indexctrl.index.value = 2;
+        }
+        if (text == 'Houses') {
+          propCtrl.categoryFilter = "House";
+          indexctrl.index.value = 2;
+        }
+        if (text == 'Apartment') {
+          propCtrl.categoryFilter = "Apartment";
+          indexctrl.index.value = 2;
+        }
       },
       child: Container(
-        height: 100,
-        width: 200,
+        height: MediaQuery.of(context).size.height * 0.085,
+        width: MediaQuery.of(context).size.width * 0.4,
         padding:
             EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.07),
         decoration: BoxDecoration(
@@ -41,7 +58,7 @@ class CustomBoxButton extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 30,
+              size: 25,
               color: AppThemeData.themeColor,
             ),
             const SizedBox(
@@ -51,7 +68,7 @@ class CustomBoxButton extends StatelessWidget {
               text,
               style: TextStyle(
                 color: AppThemeData.themeColor,
-                fontSize: 25,
+                fontSize: 20,
                 fontWeight: FontWeight.w400,
               ),
             ),

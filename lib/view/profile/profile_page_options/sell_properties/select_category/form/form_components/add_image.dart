@@ -89,7 +89,6 @@ class _AddImageState extends State<AddImage> {
                       child: ImageContainer(image: _images[i])),
                 //if (_images.length < 4)
                 InkWell(
-                  onLongPress: () {},
                   onTap: () async {
                     await _selectAndUploadImage();
                   },

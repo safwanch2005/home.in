@@ -15,7 +15,8 @@ class EditMyProp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 30,
+        height: MediaQuery.of(context).size.height * 0.04,
+        width: MediaQuery.of(context).size.width * 0.4,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.white10),
           onPressed: () async {
@@ -31,7 +32,6 @@ class EditMyProp extends StatelessWidget {
               Get.to(() => FormPage(isLand: true));
             } else {
               propCtrl.getDataForEdit(false);
-
               Get.to(() => FormPage(isLand: false));
             }
           },

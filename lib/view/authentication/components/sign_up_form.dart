@@ -6,7 +6,9 @@ import 'package:real_estate_application/firebase/firebase_constants.dart';
 import 'package:real_estate_application/view/authentication/authentication_page.dart';
 import 'package:real_estate_application/view/authentication/components/custom_textfield.dart';
 import 'package:real_estate_application/view/authentication/email_verification_page.dart';
+import 'package:real_estate_application/view/custom_widget/snackbar/error.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpForms extends StatefulWidget {
   const SignUpForms({super.key});
@@ -72,9 +74,43 @@ class _SignUpFormsState extends State<SignUpForms> {
                 });
               },
             ),
-            Text(
-              "I agree with Terms of Conditions and Privacy Policy",
-              style: GoogleFonts.poppins(fontSize: 16),
+            GestureDetector(
+              onTap: () async {
+                final url = Uri.parse(
+                    'https://safwanch2005.github.io/home.in.privacypolicy/');
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                } else {
+                  errorSnackBar("Error", "Failed to launch");
+                }
+              },
+              child: RichText(
+                text: TextSpan(
+                  text: "I agree with ",
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: AppThemeData.black,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "Terms of Conditions and Privacy\nPolicy",
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: AppThemeData.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: " (Click here to read)",
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: AppThemeData.themeColor,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         ),

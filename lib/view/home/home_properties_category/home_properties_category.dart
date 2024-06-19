@@ -47,22 +47,6 @@ class HomePropertiesCategories extends StatelessWidget {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.015,
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     CustomBoxButton(
-        //       text: "Saved",
-        //       icon: Icons.favorite,
-        //     ),
-        //     SizedBox(
-        //       width: MediaQuery.of(context).size.width * 0.05,
-        //     ),
-        //     CustomBoxButton(
-        //       text: "Saved",
-        //       icon: Icons.favorite,
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }
