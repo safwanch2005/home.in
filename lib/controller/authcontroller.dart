@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:real_estate_application/model/user_model.dart';
 import 'package:real_estate_application/view/authentication/components/otp_verification_page.dart';
 import 'package:real_estate_application/view/authentication/components/username_num.dart';
@@ -172,56 +171,56 @@ class AuthController extends GetxController {
     }
   }
 
-  //sign in with google
-  signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+  // //sign in with google
+  // signInWithGoogle() async {
+  //   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    try {
-      // Sign out from Google to force account selection
-      await googleSignIn.signOut();
+  //   try {
+  //     // Sign out from Google to force account selection
+  //     await googleSignIn.signOut();
 
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+  //     final GoogleSignInAccount? googleSignInAccount =
+  //         await googleSignIn.signIn();
 
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+  //     if (googleSignInAccount != null) {
+  //       final GoogleSignInAuthentication googleSignInAuthentication =
+  //           await googleSignInAccount.authentication;
 
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken,
-        );
+  //       final AuthCredential credential = GoogleAuthProvider.credential(
+  //         idToken: googleSignInAuthentication.idToken,
+  //         accessToken: googleSignInAuthentication.accessToken,
+  //       );
 
-        UserCredential userCredential =
-            await auth.signInWithCredential(credential);
-        User? user = userCredential.user;
+  //       UserCredential userCredential =
+  //           await auth.signInWithCredential(credential);
+  //       User? user = userCredential.user;
 
-        if (user != null) {
-          // Check if the user exists in Firestore
-          QuerySnapshot userQuery = await db
-              .collection('users')
-              .where('id', isEqualTo: user.uid)
-              .get();
-          if (userQuery.docs.isEmpty) {
-            // If user does not exist, create a new user in Firestore
-            await addUser(UserModel(
-              userName: user.displayName,
-              email: user.email,
-              notificationToken:
-                  notificationToken, // replace with your actual token variable
-              id: user.uid,
-              chatWith: [],
-            ));
-          }
+  //       if (user != null) {
+  //         // Check if the user exists in Firestore
+  //         QuerySnapshot userQuery = await db
+  //             .collection('users')
+  //             .where('id', isEqualTo: user.uid)
+  //             .get();
+  //         if (userQuery.docs.isEmpty) {
+  //           // If user does not exist, create a new user in Firestore
+  //           await addUser(UserModel(
+  //             userName: user.displayName,
+  //             email: user.email,
+  //             notificationToken:
+  //                 notificationToken, // replace with your actual token variable
+  //             id: user.uid,
+  //             chatWith: [],
+  //           ));
+  //         }
 
-          // Navigate to BottomNavBar
-          Get.offAll(() => BottomNavBar());
-        }
-      }
-    } catch (e) {
-      errorSnackBar("Error", "$e");
-    }
-  }
+  //         // Navigate to BottomNavBar
+  //         Get.offAll(() => BottomNavBar());
+  //       }
+  //     }
+  //   } catch (e) {
+  //     errorSnackBar("Error", "$e");
+  //   }
+  // }
 
   sentOtp() async {
     try {

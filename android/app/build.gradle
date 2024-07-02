@@ -60,7 +60,7 @@ android {
         versionName flutterVersionName
         multiDexEnabled true
     }
-
+ 
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']

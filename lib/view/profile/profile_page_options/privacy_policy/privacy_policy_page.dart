@@ -12,7 +12,9 @@ class PrivacyPolicyPage extends StatelessWidget {
         title: Text(
           'Privacy Policy',
           style: GoogleFonts.poppins(
-              color: AppThemeData.themeColor, fontWeight: FontWeight.bold),
+            color: AppThemeData.themeColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -25,11 +27,6 @@ class PrivacyPolicyPage extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
-            const Text(
-              'Introduction',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
             const Text(
               'Welcome to Home.in, a mobile application developed using Flutter with Firebase as the backend (the "Service"). This Privacy Policy explains how we collect, use, and disclose your information when you use our Service. By using the Service, you agree to the collection and use of information in accordance with this policy.',
             ),
@@ -50,7 +47,7 @@ class PrivacyPolicyPage extends StatelessWidget {
               '- Email address\n'
               '- Phone number\n'
               '- Profile picture\n'
-              '- Authentication details (Google, phone number, email-password)\n'
+              '- Authentication details (phone number, email-password)\n'
               '- Location data (only if you allow location permission)',
             ),
             const SizedBox(height: 16.0),
@@ -144,6 +141,51 @@ class PrivacyPolicyPage extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
             const Text(
+              'Data Encryption',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            const Text(
+              'All sensitive customer information, including physical addresses, email addresses, and any potential credit information, is encrypted both at rest and in transit. We use AES-256 encryption for data at rest and TLS 1.2 or higher for data in transit.',
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Secure Authentication',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            const Text(
+              'Our application utilizes Firebase Authentication, which supports secure methods such as email/password and phone authentication. This ensures that user authentication is handled securely.',
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Database Security',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            const Text(
+              'We use Firebase Firestore, a secure database service provided by Google Cloud. Firestore offers robust security features, including role-based access control (RBAC), to ensure that only authorized users can access specific data.',
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Third-Party Services',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            const Text(
+              'We leverage Firebase\'s secure data storage services, which comply with industry standards and certifications, including ISO 27001, SOC 1, SOC 2, and SOC 3. This ensures that customer data is stored securely and handled in accordance with best practices.',
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Regular Security Audits',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            const Text(
+              'Our application undergoes regular security audits and assessments to identify and address potential vulnerabilities. This proactive approach helps us maintain a high level of security for our users.',
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
               'Your Data Protection Rights',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -153,9 +195,9 @@ class PrivacyPolicyPage extends StatelessWidget {
               '- The right to access – You have the right to request copies of your personal data.\n'
               '- The right to rectification – You have the right to request that we correct any information you believe is inaccurate or complete information you believe is incomplete.',
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 16.0),
             Text(
-              'If you have any questions about this Privacy Policy, please contact us:\n'
+              'Contact Us\n'
               'Name: Safwan CH\n'
               'Email: safwan55550000@gmail.com\n',
               style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
