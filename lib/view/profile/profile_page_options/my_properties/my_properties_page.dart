@@ -69,94 +69,90 @@ class MyPropertiesPage extends StatelessWidget {
                       ],
                     ),
                   )
-                : Expanded(
-                    child: ListView.builder(
-                        itemCount: propertiesDocs.length,
-                        itemBuilder: (context, index) {
-                          final prop = propertiesDocs[index];
-                          final propData = prop.data() as Map<String, dynamic>;
+                : ListView.builder(
+                    itemCount: propertiesDocs.length,
+                    itemBuilder: (context, index) {
+                      final prop = propertiesDocs[index];
+                      final propData = prop.data() as Map<String, dynamic>;
 
-                          return GestureDetector(
-                            onTap: () {
-                              Get.to(
-                                  () => PropertiesDetailsPage(
-                                        propData: propData,
-                                        propId: prop.id,
-                                      ),
-                                  transition: Transition.rightToLeftWithFade);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                color: AppThemeData.background,
-                                border: Border.all(
-                                    color: AppThemeData.themeColor, width: 2),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(25)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppThemeData.themeColor
-                                        .withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  MyPropImage(
-                                    imgUrl: propData["imageUrls"].first,
-                                    isSold: propData['isSold'],
-                                  ),
-                                  CategoryText(
-                                    category: propData['category'],
-                                    type: propData['type'],
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: TitleAllProp(
-                                        title: propData["title"],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      EditMyProp(
-                                        id: prop.id,
-                                      ),
-                                      DeleteMyProp(
-                                        id: prop.id,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  PropSold(
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(
+                              () => PropertiesDetailsPage(
+                                    propData: propData,
                                     propId: prop.id,
-                                    isSold: propData['isSold'],
                                   ),
-                                  AdminResponeStatus(
-                                    isAccepted: propData['isAccepted'],
-                                  )
+                              transition: Transition.rightToLeftWithFade);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: AppThemeData.background,
+                            border: Border.all(
+                                color: AppThemeData.themeColor, width: 2),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppThemeData.themeColor.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              MyPropImage(
+                                imgUrl: propData["imageUrls"].first,
+                                isSold: propData['isSold'],
+                              ),
+                              CategoryText(
+                                category: propData['category'],
+                                type: propData['type'],
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: TitleAllProp(
+                                    title: propData["title"],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  EditMyProp(
+                                    id: prop.id,
+                                  ),
+                                  DeleteMyProp(
+                                    id: prop.id,
+                                  ),
                                 ],
                               ),
-                            ),
-                          );
-                        }),
-                  );
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              PropSold(
+                                propId: prop.id,
+                                isSold: propData['isSold'],
+                              ),
+                              AdminResponeStatus(
+                                isAccepted: propData['isAccepted'],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    });
           }),
     );
   }

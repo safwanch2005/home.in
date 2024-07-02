@@ -8,8 +8,7 @@ class LocationTextDetailPage extends StatelessWidget {
   dynamic location;
   @override
   Widget build(BuildContext context) {
-    String value =
-        " ${location["city"]}, ${location["state"]}, ${location["country"]}";
+    String value = " ${location["city"]}, ${location["state"]}";
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -30,7 +29,7 @@ class LocationTextDetailPage extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
                   color: AppThemeData.themeColor,
-                  fontSize: 25,
+                  fontSize: 23,
                   fontWeight: FontWeight.w300),
             ),
           ),

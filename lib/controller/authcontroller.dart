@@ -364,7 +364,6 @@ class AuthController extends GetxController {
       final result = await ref.putFile(imageFile);
       final fileUrl = await result.ref.getDownloadURL();
       imgUrl = fileUrl;
-      print(imgUrl);
       successSnackbar("Success", 'Image successfully saved');
     } catch (e) {
       errorSnackBar("error", 'Error in uploading image $e');

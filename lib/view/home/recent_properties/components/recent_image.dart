@@ -12,11 +12,8 @@ class RecentPropImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 318,
       width: double.infinity,
       decoration: BoxDecoration(
-          //color: Colors.black38,
-
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: AppThemeData.themeColor, width: 1)),
       child: ClipRRect(

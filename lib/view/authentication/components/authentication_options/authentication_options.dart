@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/controller/authcontroller.dart';
 import 'package:real_estate_application/view/authentication/components/authentication_options/email_auth.dart';
-import 'package:real_estate_application/view/authentication/components/authentication_options/google_auth.dart';
+// import 'package:real_estate_application/view/authentication/components/authentication_options/google_auth.dart';
 import 'package:real_estate_application/view/authentication/components/authentication_options/phone_auth.dart';
 import 'package:real_estate_application/view/authentication/signup_page.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
@@ -17,7 +17,8 @@ class AuthenticationOptions extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.27,
+        height: MediaQuery.of(context).size.height * 0.22,
+        //height: MediaQuery.of(context).size.height * 0.27,
         width: double.infinity,
         decoration: BoxDecoration(
             color: AppThemeData.white,
@@ -29,19 +30,19 @@ class AuthenticationOptions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               PhoneAuth(),
-              const SizedBox(height: 15),
-              GoogleAuth(),
+              //const SizedBox(height: 15),
+              //GoogleAuth(),
               const SizedBox(height: 15),
               EmailAuth(),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Don't have an account?",
                       style: GoogleFonts.poppins(
-                          fontSize: 15, color: AppThemeData.black),
+                          fontSize: 20, color: AppThemeData.black),
                     ),
                     InkWell(
                       onTap: () {
@@ -50,7 +51,7 @@ class AuthenticationOptions extends StatelessWidget {
                       child: Text(
                         " Sign up",
                         style: GoogleFonts.poppins(
-                            fontSize: 15, color: AppThemeData.green),
+                            fontSize: 20, color: AppThemeData.green),
                       ),
                     ),
                   ],

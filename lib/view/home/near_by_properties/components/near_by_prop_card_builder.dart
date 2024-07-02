@@ -48,97 +48,91 @@ class _NearByCardBuilderState extends State<NearByCardBuilder> {
           return !nearByCtrl.locationEnabled || nearByCtrl.state == null
               ? GestureDetector(
                   onTap: () async {
-                    print(nearByCtrl.locationEnabled);
                     await nearByCtrl.getUserLocation();
                     setState(() {});
                   },
                   child: const UserLocationAcces())
-              : Expanded(
-                  child: propertiesDocs.isEmpty
-                      ? noPropNear()
-                      : Column(
-                          children: [
-                            Expanded(
-                                child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: AppThemeData.background,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppThemeData.themeColor
-                                        .withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
+              : propertiesDocs.isEmpty
+                  ? noPropNear()
+                  : Column(
+                      children: [
+                        Expanded(
+                            child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppThemeData.background,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppThemeData.themeColor.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, 3),
                               ),
-                              child: CardSwiper(
-                                duration: const Duration(milliseconds: 100),
-                                padding: EdgeInsets.zero,
-                                cardsCount: propertiesDocs.length,
-                                numberOfCardsDisplayed: 1,
-                                allowedSwipeDirection:
-                                    const AllowedSwipeDirection.only(
-                                        right: true, left: true),
-                                cardBuilder: (context, index, x, y) {
-                                  final prop = propertiesDocs[index];
-                                  final propData =
-                                      prop.data() as Map<String, dynamic>;
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.to(
-                                          () => PropertiesDetailsPage(
-                                                propData: propData,
-                                                propId: prop.id,
-                                              ),
-                                          transition:
-                                              Transition.rightToLeftWithFade);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: AppThemeData.background,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          RecentPropImage(
-                                            isSold: propData['isSold'],
-                                            imgUrl: propData["imageUrls"].first,
+                            ],
+                          ),
+                          child: CardSwiper(
+                            duration: const Duration(milliseconds: 100),
+                            padding: EdgeInsets.zero,
+                            cardsCount: propertiesDocs.length,
+                            numberOfCardsDisplayed: 1,
+                            allowedSwipeDirection:
+                                const AllowedSwipeDirection.only(
+                                    right: true, left: true),
+                            cardBuilder: (context, index, x, y) {
+                              final prop = propertiesDocs[index];
+                              final propData =
+                                  prop.data() as Map<String, dynamic>;
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.to(
+                                      () => PropertiesDetailsPage(
+                                            propData: propData,
+                                            propId: prop.id,
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                RecentPropCat(
-                                                  category:
-                                                      propData['category'],
-                                                  type: propData['type'],
-                                                ),
-                                                RecentPropTitle(
-                                                  title: propData["title"],
-                                                ),
-                                                LocationNearByProp(
-                                                  location:
-                                                      propData["location"],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                      transition:
+                                          Transition.rightToLeftWithFade);
                                 },
-                              ),
-                            )),
-                          ],
-                        ),
-                );
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppThemeData.background,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      RecentPropImage(
+                                        isSold: propData['isSold'],
+                                        imgUrl: propData["imageUrls"].first,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            RecentPropCat(
+                                              category: propData['category'],
+                                              type: propData['type'],
+                                            ),
+                                            RecentPropTitle(
+                                              title: propData["title"],
+                                            ),
+                                            LocationNearByProp(
+                                              location: propData["location"],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )),
+                      ],
+                    );
         });
   }
 }

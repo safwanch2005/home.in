@@ -23,7 +23,7 @@ class LocationAllProp extends StatelessWidget {
           Wrap(
             children: [
               Text(
-                value.length <= 30 ? value : '${value.substring(0, 30)}...',
+                value.length <= 25 ? value : '${value.substring(0, 25)}...',
                 style: GoogleFonts.poppins(
                     color: AppThemeData.themeColor,
                     fontSize: 25,

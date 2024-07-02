@@ -19,8 +19,9 @@ class AuthenticationPage extends StatelessWidget {
                 opacity: 0.75,
                 child: Image.asset(
                   "assets/green_car.jpeg",
-                  fit: BoxFit.fitWidth,
-                  height: MediaQuery.of(context).size.height * 0.771,
+                  fit: BoxFit.fill,
+                  //height: MediaQuery.of(context).size.height * 0.771,
+                  height: MediaQuery.of(context).size.height * 0.83,
                 ),
               ),
             ],

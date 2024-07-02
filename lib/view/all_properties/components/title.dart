@@ -8,9 +8,9 @@ class TitleAllProp extends StatelessWidget {
   String title = "";
   @override
   Widget build(BuildContext context) {
-    return Text(title.length <= 20 ? title : '${title.substring(0, 20)}...',
+    return Text(title.length <= 18 ? title : '${title.substring(0, 18)}...',
         style: GoogleFonts.poppins(
-            fontSize: 30,
+            fontSize: 25,
             color: AppThemeData.themeColor,
             fontWeight: FontWeight.w400));
   }

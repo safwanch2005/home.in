@@ -23,7 +23,7 @@ class DetailsContainerHouseApart extends StatelessWidget {
           ),
         ),
         Container(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: AppThemeData.background,
             boxShadow: [
@@ -86,7 +86,7 @@ class DetailsContainerHouseApart extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
-          fontSize: 23,
+          fontSize: 20,
           fontWeight: FontWeight.w700,
           color: AppThemeData.themeColorShade),
     );
@@ -96,7 +96,7 @@ class DetailsContainerHouseApart extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
-          fontSize: 23,
+          fontSize: 20,
           fontWeight: FontWeight.w700,
           color: AppThemeData.themeColor),
     );

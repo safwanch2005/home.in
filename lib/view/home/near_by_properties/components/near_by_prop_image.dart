@@ -15,8 +15,6 @@ class NearByPropImage extends StatelessWidget {
       height: 318,
       width: double.infinity,
       decoration: BoxDecoration(
-          //color: Colors.black38,
-
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: AppThemeData.themeColor, width: 1)),
       child: ClipRRect(

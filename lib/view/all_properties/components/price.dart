@@ -23,7 +23,7 @@ class PriceAllProp extends StatelessWidget {
       child: Text(
         " ₹ $price ",
         style: GoogleFonts.poppins(
-            fontSize: 35,
+            fontSize: 30,
             color: AppThemeData.themeColor,
             fontWeight: FontWeight.w300),
       ),

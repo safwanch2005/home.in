@@ -10,7 +10,7 @@ class PlotAreaAllProp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text("$plotArea sq.ft",
         style: GoogleFonts.poppins(
-            fontSize: 30,
+            fontSize: 20,
             color: AppThemeData.themeColor,
             fontWeight: FontWeight.w400));
   }

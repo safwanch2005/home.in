@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <application
-        android:label="real_estate_application"
+        android:label="Home.in"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

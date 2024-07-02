@@ -125,14 +125,6 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  // GestureDetector(
-                  //   onTap: () {},
-                  //   child: const Icon(
-                  //     Icons.refresh_rounded,
-                  //     size: 30,
-                  //     color: Color(0xFF00704A),
-                  //   ),
-                  // ),
                   const SizedBox(height: 10),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.5,

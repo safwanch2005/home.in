@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_application/view/theme/theme_data.dart';
 
-///////////////////NEW CHANGES ADDED HEREEEEEEEEEEEEEEEEEEE
 // ignore: must_be_immutable
 class LandDetailsContainer extends StatelessWidget {
   LandDetailsContainer({super.key, required this.propData});
@@ -24,7 +23,7 @@ class LandDetailsContainer extends StatelessWidget {
           ),
         ),
         Container(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: AppThemeData.background,
             boxShadow: [
@@ -78,7 +77,7 @@ class LandDetailsContainer extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
-          fontSize: 23,
+          fontSize: 20,
           fontWeight: FontWeight.w700,
           color: AppThemeData.themeColorShade),
     );
@@ -88,7 +87,7 @@ class LandDetailsContainer extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
-          fontSize: 23,
+          fontSize: 20,
           fontWeight: FontWeight.w700,
           color: AppThemeData.themeColor),
     );
