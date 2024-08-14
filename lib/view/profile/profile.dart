@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const LogOut(),
               const SizedBox(height: 15),
               Text(
-                "version 1.0.0",
+                "version 1.0.2",
                 style: GoogleFonts.poppins(
                     color: AppThemeData.themeColorShade, fontSize: 20),
               ),
